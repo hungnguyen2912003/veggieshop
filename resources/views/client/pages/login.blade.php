@@ -38,12 +38,12 @@
                             <label class="mb-0">
                                 <input type="checkbox" name="remember"> Remember Me
                             </label>
-                            <a href="#" class="text-decoration-none">
+                            <a href="{{ route('password.request') }}" class="text-decoration-none">
                                 Forgot Password?
                             </a>
                         </div>
 
-                        <div class="btn-wrapper mt-3">
+                        <div class="btn-wrapper mt-3 text-center">
                             <button class="theme-btn-1 btn reverse-color btn-block" type="submit">Sign In</button>
                         </div>
                     </form>
@@ -55,13 +55,6 @@
                             <strong>Create one here</strong>
                         </a>
                     </div>
-
-                    {{-- Optional: Social login section --}}
-                    {{-- <div class="text-center mt-4">
-                        <p class="mb-2">Or sign in with</p>
-                        <a href="#" class="btn btn-outline-secondary btn-sm mx-1">Google</a>
-                        <a href="#" class="btn btn-outline-secondary btn-sm mx-1">Facebook</a>
-                    </div> --}}
                 </div>
             </div>
         </div>

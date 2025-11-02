@@ -139,9 +139,13 @@ class AuthController extends Controller
             'password.required' => 'Please enter your password.',
         ]);
 
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'status' => 'active'])) {
+        // Kiểm tra tài khoản có status = active không
+        $credentials['status'] = 'active';
+
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+
             if (in_array(Auth::user()->role->name, ['customer'])) {
-                $request->session()->regenerate();
                 toastr()->success('Login successful!');
                 return redirect()->route('home');
             } else {
@@ -150,6 +154,10 @@ class AuthController extends Controller
                 return redirect()->back()->withInput();
             }
         }
+
+        // Nếu tới đây nghĩa là login thất bại
+        toastr()->error('Invalid email or password. Please try again.');
+        return redirect()->back()->withInput();
     }
 
     public function logout(Request $request)
