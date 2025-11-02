@@ -13,7 +13,7 @@
                             <div class="row">
                                 <div class="col-12">
                                     <div class="modal-product-img">
-                                        <img src="img/product/7.png" alt="#">
+                                        <img src="{{ asset('assets/client/img/product/7.png') }}" alt="#">
                                     </div>
                                     <div class="modal-product-info">
                                         <h5><a href="product-details.html">Vegetables Juices</a></h5>
@@ -26,7 +26,7 @@
                                     <div class="additional-info d-none">
                                         <p>We want to give you <b>10% discount</b> for your first order, <br> Use discount code at checkout</p>
                                         <div class="payment-method">
-                                            <img src="img/icons/payment.png" alt="#">
+                                            <img src="{{ asset('assets/client/img/icons/payment.png') }}" alt="#">
                                         </div>
                                     </div>
                                 </div>

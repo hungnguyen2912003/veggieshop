@@ -14,7 +14,7 @@
                             <div class="row">
                                 <div class="col-lg-6 col-12">
                                     <div class="modal-product-img">
-                                        <img src="img/product/4.png" alt="#">
+                                        <img src="{{ asset('assets/client/img/product/4.png') }}" alt="#">
                                     </div>
                                 </div>
                                 <div class="col-lg-6 col-12">

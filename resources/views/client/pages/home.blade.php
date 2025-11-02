@@ -197,7 +197,7 @@
                 <div class="ltn__category-item ltn__category-item-3 text-center">
                     <div class="ltn__category-item-img">
                         <a href="shop.html">
-                            <img src="img/icons/icon-img/category-1.png" alt="Image">
+                            <img src="{{ asset('assets/client/img/icons/icon-img/category-1.png') }}" alt="Image">
                         </a>
                     </div>
                     <div class="ltn__category-item-name">

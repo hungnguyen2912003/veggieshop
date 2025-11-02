@@ -107,7 +107,7 @@
                                         <div id="mce-responses" class="clear">
                                             <div class="response" id="mce-error-response" style="display:none"></div>
                                             <div class="response" id="mce-success-response" style="display:none"></div>
-                                        </div> <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+                                        </div>
                                         <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_dde0a42ff09e8d43cad40dc82_72d274d15d" tabindex="-1" value=""></div>
                                         <div class="clear">
                                             <div class="btn-wrapper">
