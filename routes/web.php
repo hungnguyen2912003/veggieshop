@@ -1,10 +1,29 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Client\AuthController;
 
 Route::get('/', function () {
     return view('client.pages.home');
-});
+})->name('home');
+
+Route::controller(AuthController::class)
+    ->prefix('register')
+    ->name('register.')
+    ->group(function () {
+        Route::get('/', 'showRegistrationForm')->name('form');
+        Route::post('/', 'register')->name('post');
+        Route::get('/success', 'showSuccess')->name('success');
+        Route::post('/resend', 'resendActivation')->name('resend');
+    });
+
+Route::get('/activate/{token}', [AuthController::class, 'activate'])->name('activate.account');
+
+
+Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/about', function () {
     return view('client.pages.about');
@@ -34,13 +53,7 @@ Route::get('/checkout', function () {
     return view('client.pages.checkout');
 });
 
-Route::get('/login', function () {
-    return view('client.pages.login');
-});
 
-Route::get('/register', function () {
-    return view('client.pages.register');
-});
 
 Route::get('/account', function () {
     return view('client.pages.account');
