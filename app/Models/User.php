@@ -63,4 +63,12 @@ class User extends Authenticatable
     {
         return $this->status === 'deleted';
     }
+
+    public function getAvatarUrlAttribute()
+    {
+        if ($this->avatar) {
+            return asset('storage/' . $this->avatar);
+        }
+        return asset('storage/uploads/users/default-avatar.png');
+    }
 }

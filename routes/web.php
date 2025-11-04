@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Client\AuthController;
 use App\Http\Controllers\Client\ForgotPasswordController;
 use App\Http\Controllers\Client\ResetPasswordController;
+use App\Http\Controllers\Client\AccountController;
 
 Route::get('/', function () {
     return view('client.pages.home');
@@ -33,60 +34,13 @@ Route::middleware('guest')->group(function () {
 
 // authenticated routes for account activation and logout
 Route::get('/activate/{token}', [AuthController::class, 'activate'])->name('activate.account');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
+Route::middleware('auth')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-Route::get('/about', function () {
-    return view('client.pages.about');
-});
-
-Route::get('/contact', function () {
-    return view('client.pages.contact');
-});
-
-Route::get('/shop', function () {
-    return view('client.pages.shop');
-});
-
-Route::get('/product/{id}', function ($id) {
-    return view('client.pages.product', ['id' => $id]);
-});
-
-Route::get('/cart', function () {
-    return view('client.pages.cart');
-});
-
-Route::get('/product-detail', function () {
-    return view('client.pages.product-detail');
-});
-
-Route::get('/checkout', function () {
-    return view('client.pages.checkout');
-});
-
-
-
-Route::get('/account', function () {
-    return view('client.pages.account');
-});
-
-Route::get('/faq', function () {
-    return view('client.pages.faq');
-});
-
-Route::get('/wishlist', function () {
-    return view('client.pages.wishlist');
-});
-
-Route::get('/team', function () {
-    return view('client.pages.team');
-});
-
-Route::get('/service', function () {
-    return view('client.pages.service');
-});
-
-Route::get('/404', function () {
-    return view('client.pages.404');
+    Route::prefix('account')->name('account.')->group(function () {
+        Route::get('/', [AccountController::class, 'index']);
+        Route::post('/update', [AccountController::class, 'update'])->name('update');
+    });
 });

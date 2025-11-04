@@ -8,6 +8,7 @@
     <meta name="robots" content="noindex, follow" />
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Place favicon.png in the root directory -->
     <link rel="shortcut icon" href="{{ asset('assets/client/img/favicon.png') }}" type="image/x-icon" />
@@ -19,6 +20,9 @@
     <link rel="stylesheet" href="{{ asset('assets/client/css/style.css') }}">
     <!-- Responsive css -->
     <link rel="stylesheet" href="{{ asset('assets/client/css/responsive.css') }}">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ asset('assets/client/css/custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/client/css/toastr.min.css') }}">
 </head>
 
 <body>
@@ -48,6 +52,9 @@
     <script src="{{ asset('assets/client/js/plugins.js') }}"></script>
     <!-- Main JS -->
     <script src="{{ asset('assets/client/js/main.js') }}"></script>
-  
+    <!-- Custom JS -->
+    <script src="{{ asset('assets/client/js/custom.js') }}"></script>
+
+    <script src={{ asset('assets/client/js/toastr.min.js') }}></script>
 </body>
 </html>

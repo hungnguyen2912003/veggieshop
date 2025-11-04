@@ -110,6 +110,15 @@
                                     <li><a href="/register">Register</a></li>
                                     <li><a href="/account">My Account</a></li>
                                     <li><a href="/wishlist">Wishlist</a></li>
+                                    <li>
+                                        <a href="{{ route('logout') }}"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        Logout
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
+                                    </li>                                      
                                 </ul>
                             </li>
                         </ul>
@@ -149,7 +158,7 @@
         <div class="mini-cart-product-area ltn__scrollbar">
             <div class="mini-cart-item clearfix">
                 <div class="mini-cart-img">
-                    <a href="#"><img src="img/product/1.png" alt="Image"></a>
+                    <a href="#"><img src="{{ asset('assets/client/img/product/1.png') }}" alt="Image"></a>
                     <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
                 </div>
                 <div class="mini-cart-info">
@@ -159,7 +168,7 @@
             </div>
             <div class="mini-cart-item clearfix">
                 <div class="mini-cart-img">
-                    <a href="#"><img src="img/product/2.png" alt="Image"></a>
+                    <a href="#"><img src="{{ asset('assets/client/img/product/2.png') }}" alt="Image"></a>
                     <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
                 </div>
                 <div class="mini-cart-info">
@@ -169,7 +178,7 @@
             </div>
             <div class="mini-cart-item clearfix">
                 <div class="mini-cart-img">
-                    <a href="#"><img src="img/product/3.png" alt="Image"></a>
+                    <a href="#"><img src="{{ asset('assets/client/img/product/3.png') }}" alt="Image"></a>
                     <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
                 </div>
                 <div class="mini-cart-info">
@@ -179,7 +188,7 @@
             </div>
             <div class="mini-cart-item clearfix">
                 <div class="mini-cart-img">
-                    <a href="#"><img src="img/product/4.png" alt="Image"></a>
+                    <a href="#"><img src="{{ asset('assets/client/img/product/4.png') }}" alt="Image"></a>
                     <span class="mini-cart-item-delete"><i class="icon-cancel"></i></span>
                 </div>
                 <div class="mini-cart-info">
