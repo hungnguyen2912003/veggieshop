@@ -75,19 +75,77 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
+                                                            @foreach ($addresses as $address)
                                                             <tr>
-                                                                <td>John</td>
-                                                                <td>Carsafe - Car Service PSD Template</td>
-                                                                <td>USA</td>
-                                                                <td>+1234567890</td>
-                                                                <td>Yes</td>
-                                                                <td><a href="#"><i class="far fa-arrow-to-bottom mr-1"></i> Xóa</a></td>
+                                                                <td>{{ $address->full_name }}</td>
+                                                                <td>{{ $address->address }}</td>
+                                                                <td>{{ $address->city }}</td>
+                                                                <td>{{ $address->phone }}</td>
+                                                                <td>
+                                                                    @if ($address->default)
+                                                                        <span class="badge bg-success">Mặc định</span>
+                                                                    @else
+                                                                        <form action="{{ route('account.addresses.update', $address->id) }}" method="POST" class="d-inline">
+                                                                            @csrf
+                                                                            @method('PUT')
+                                                                            <button type="submit" class="btn btn-sm btn-warning">Chọn</button>
+                                                                        </form>
+                                                                    @endif
+                                                                </td>
+                                                                <td>
+                                                                    <form action="{{ route('account.addresses.delete', $address->id) }}" method="POST" class="d-inline">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa địa chỉ này?')">Xóa</button>
+                                                                    </form>                                                                    
+                                                                    
+                                                                </td>
                                                             </tr>
+                                                            @endforeach
                                                         </tbody>
                                                     </table>
                                                 </div>
                                                 <div class="btn-wrapper">
-                                                    <button type="submit" class="btn theme-btn-1 btn-effect-1 text-uppercase">Thêm địa chỉ mới</button>
+                                                    <button type="submit" class="btn theme-btn-1 btn-effect-1 text-uppercase" data-bs-toggle="modal" data-bs-target="#addAddressModal">Thêm địa chỉ mới</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModal" aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content" style="padding: 5px 10px">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="addAddressModal">Thêm địa chỉ mới</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form action="{{ route('account.addresses.add') }}" method="POST" id="addAddressForm">
+                                                            @csrf
+                                                            <div class="mb-3">
+                                                                <label for="full_name" class="form-label">Tên người nhận</label>
+                                                                <input type="text" class="form-control" id="full_name" name="full_name" placeholder="Nhập tên người nhận">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="address" class="form-label">Địa chỉ</label>
+                                                                <input type="text" class="form-control" id="address" name="address" placeholder="Nhập địa chỉ">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="city" class="form-label">Thành phố</label>
+                                                                <input type="text" class="form-control" id="city" name="city" placeholder="Nhập thành phố">
+                                                            </div>
+                                                            <div class="mb-3">
+                                                                <label for="phone" class="form-label">Số điện thoại</label>
+                                                                <input type="text" class="form-control" id="phone" name="phone" placeholder="Nhập số điện thoại">
+                                                            </div>
+                                                            <div class="form-check mb-3">
+                                                                <input class="form-check-input" type="checkbox" id="default_address" name="default_address">
+                                                                <label class="form-check-label" for="default_address">
+                                                                    Đặt làm địa chỉ mặc định
+                                                                </label>
+                                                            </div>
+                                                            <button type="submit" class="btn theme-btn-1 btn-effect-1 text-uppercase">Lưu thay đổi</button>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

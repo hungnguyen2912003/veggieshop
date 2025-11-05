@@ -106,4 +106,37 @@ $(document).ready(function () {
         });
     });
 
+    $("#addAddressForm").submit(function (e) {
+        e.preventDefault();
+
+        let fullName = $('#full_name').val().trim();
+        let phone = $('#phone').val().trim();
+        let address = $('#address').val().trim();
+        let city = $('#city').val().trim();
+
+        let isValid = true;
+
+        $('.error-message').remove();
+
+        if (fullName.length < 3) {
+            isValid = false;
+            $('#full_name').after(
+                `<p class="error-message text-danger">Họ và tên không được ít hơn 3 ký tự.</p>`
+            );
+        }
+
+        let phoneRegex = /^[0-9]{10,11}$/;
+        if (!phoneRegex.test(phone)) {
+            isValid = false;
+            $('#phone').after(
+                `<p class="error-message text-danger">Số điện thoại không hợp lệ.</p>`
+            );
+        }
+
+        if (isValid) {
+            this.submit();
+        }
+    });
+
+
 })

@@ -43,5 +43,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [AccountController::class, 'index']);
         Route::post('/update', [AccountController::class, 'update'])->name('update');
         Route::post('/change-password', [AccountController::class, 'changePassword'])->name('change-password');
+        Route::post('/addresses', [AccountController::class, 'addAddress'])->name('addresses.add');
+        Route::put('/addresses/{id}', [AccountController::class, 'updatePrimaryAddress'])->name('addresses.update');
+        Route::delete('/addresses/{id}', [AccountController::class, 'deleteAddress'])->name('addresses.delete');
     });
 });
