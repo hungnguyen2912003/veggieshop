@@ -69,11 +69,11 @@
                         <nav>
                             <div class="ltn__main-menu">
                                 <ul>
-                                    <li class="menu-icon"><a href="#">Trang chủ</a>
+                                    <li class="menu-icon"><a href="/">Trang chủ</a>
                                     </li>
-                                    <li class="menu-icon"><a href="#">Về chúng tôi</a>
+                                    <li class="menu-icon"><a href="/about">Về chúng tôi</a>
                                     </li>
-                                    <li class="menu-icon"><a href="#">Sản phẩm</a>
+                                    <li class="menu-icon"><a href="/shop">Sản phẩm</a>
                                     </li>
                                     <li><a href="/contact">Liên hệ</a></li>
                                 </ul>
