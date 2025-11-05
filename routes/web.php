@@ -5,10 +5,9 @@ use App\Http\Controllers\Client\AuthController;
 use App\Http\Controllers\Client\ForgotPasswordController;
 use App\Http\Controllers\Client\ResetPasswordController;
 use App\Http\Controllers\Client\AccountController;
+use App\Http\Controllers\Client\HomeController;
 
-Route::get('/', function () {
-    return view('client.pages.home');
-})->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 
 // guest routes for authentication

@@ -193,19 +193,21 @@
             </div>
         </div>
         <div class="row ltn__category-slider-active slick-arrow-1">
+            @foreach ($categories as $category)
             <div class="col-12">
                 <div class="ltn__category-item ltn__category-item-3 text-center">
                     <div class="ltn__category-item-img">
                         <a href="shop.html">
-                            <img src="{{ asset('assets/client/img/icons/icon-img/category-1.png') }}" alt="Image">
+                            <img src="{{ asset('storage/'. $category->image) }}" alt="{{ $category->name }}">
                         </a>
                     </div>
                     <div class="ltn__category-item-name">
-                        <h5><a href="shop.html">Browse all</a></h5>
-                        <h6>(235 item)</h6>
+                        <h5><a href="shop.html">{{ $category->name }}</a></h5>
+                        <h6>({{ $category->products->count() . ' sản phẩm' }})</h6>
                     </div>
                 </div>
             </div>
+            @endforeach
         </div>
     </div>
 </div>
@@ -221,504 +223,62 @@
                 </div>
                 <div class="ltn__tab-menu ltn__tab-menu-2 ltn__tab-menu-top-right-- text-uppercase text-center">
                     <div class="nav">
-                        <a class="active show" data-bs-toggle="tab" href="#liton_tab_3_1">Food & Drinks</a>
-                        <a data-bs-toggle="tab" href="#liton_tab_3_2" class="">Vegetables</a>
-                        <a data-bs-toggle="tab" href="#liton_tab_3_3" class="">Dried Foods</a>
-                        <a data-bs-toggle="tab" href="#liton_tab_3_4" class="">Bread & Cake</a>
-                        <a data-bs-toggle="tab" href="#liton_tab_3_5" class="">Fish & Meat</a>
+                        @foreach ($categories as $index => $category)
+                            <a data-bs-toggle="tab" href="#liton_tab_3_{{ $index + 1 }}" class="{{ $index == 0 ? 'active show' : '' }}">{{ $category->name }}</a>
+                        @endforeach
                     </div>
                 </div>
                 <div class="tab-content">
-                    <div class="tab-pane fade active show" id="liton_tab_3_1">
-                        <div class="ltn__product-tab-content-inner">
-                            <div class="row ltn__tab-product-slider-one-active slick-arrow-1">
-                                <!-- ltn__product-item -->
-                                <div class="col-lg-12">
-                                    <div class="ltn__product-item ltn__product-item-3 text-center">
-                                        <div class="product-img">
-                                            <a href="product-details.html"><img src="{{ asset('assets/client/img/product/11.png') }}" alt="#"></a>
-                                            <div class="product-badge">
-                                                <ul>
-                                                    <li class="sale-badge">-19%</li>
-                                                </ul>
+                    @foreach ($categories as $index => $category)
+                        <div class="tab-pane fade {{ $index == 0 ? 'active show' : '' }}" id="liton_tab_3_{{ $index + 1 }}">
+                            <div class="ltn__product-tab-content-inner">
+                                <div class="row ltn__tab-product-slider-one-active slick-arrow-1">
+                                    @foreach ($category->products as $product)
+                                    <div class="col-lg-12">
+                                        <div class="ltn__product-item ltn__product-item-3 text-center">
+                                            <div class="product-img">
+                                                <a href="#"><img src="{{ $product->image_url }}" alt="{{ $product->name }}"></a>
+                                                <div class="product-hover-action">
+                                                    <ul>
+                                                        <li>
+                                                            <a href="#" title="Xem nhanh" data-bs-toggle="modal" data-bs-target="#quick_view_modal">
+                                                                <i class="far fa-eye"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" title="Thêm vào giỏ hàng" data-bs-toggle="modal" data-bs-target="#add_to_cart_modal">
+                                                                <i class="fas fa-shopping-cart"></i>
+                                                            </a>
+                                                        </li>
+                                                        <li>
+                                                            <a href="#" title="Yêu thích" data-bs-toggle="modal" data-bs-target="#liton_wishlist_modal">
+                                                                <i class="far fa-heart"></i></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>                                                                                             
                                             </div>
-                                            <div class="product-hover-action">
-                                                <ul>
-                                                    <li>
-                                                        <a href="#" title="Quick View" data-bs-toggle="modal" data-bs-target="#quick_view_modal">
-                                                            <i class="far fa-eye"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" title="Add to Cart" data-bs-toggle="modal" data-bs-target="#add_to_cart_modal">
-                                                            <i class="fas fa-shopping-cart"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" title="Wishlist" data-bs-toggle="modal" data-bs-target="#liton_wishlist_modal">
-                                                            <i class="far fa-heart"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="product-info">
-                                            <div class="product-ratting">
-                                                <ul>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star-half-alt"></i></a></li>
-                                                    <li><a href="#"><i class="far fa-star"></i></a></li>
-                                                    <li class="review-total"> <a href="#"> (24)</a></li>
-                                                </ul>
-                                            </div>
-                                            <h2 class="product-title"><a href="product-details.html">Carrots Group Scal</a></h2>
-                                            <div class="product-price">
-                                                <span>$32.00</span>
-                                                <del>$46.00</del>
-                                            </div>
+                                            <div class="product-info">
+                                                <div class="product-ratting">
+                                                    <ul>
+                                                        <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                                        <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                                        <li><a href="#"><i class="fas fa-star"></i></a></li>
+                                                        <li><a href="#"><i class="fas fa-star-half-alt"></i></a></li>
+                                                        <li><a href="#"><i class="far fa-star"></i></a></li>
+                                                    </ul>
+                                                </div>
+                                                <h2 class="product-title"><a href="product-details.html">{{ $product->name }}</a></h2>
+                                                <div class="product-price">
+                                                    <span>${{ number_format($product->price, 2) }} VNĐ</span>
+                                                </div>
+                                            </div>                                            
                                         </div>
                                     </div>
-                                    <div class="ltn__product-item ltn__product-item-3 text-center">
-                                        <div class="product-img">
-                                            <a href="product-details.html"><img src="{{ asset('assets/client/img/product/7.png') }}" alt="#"></a>
-                                            <div class="product-badge">
-                                                <ul>
-                                                    <li class="sale-badge">New</li>
-                                                </ul>
-                                            </div>
-                                            <div class="product-hover-action">
-                                                <ul>
-                                                    <li>
-                                                        <a href="#" title="Quick View" data-bs-toggle="modal" data-bs-target="#quick_view_modal">
-                                                            <i class="far fa-eye"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" title="Add to Cart" data-bs-toggle="modal" data-bs-target="#add_to_cart_modal">
-                                                            <i class="fas fa-shopping-cart"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" title="Wishlist" data-bs-toggle="modal" data-bs-target="#liton_wishlist_modal">
-                                                            <i class="far fa-heart"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="product-info">
-                                            <div class="product-ratting">
-                                                <ul>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star-half-alt"></i></a></li>
-                                                    <li><a href="#"><i class="far fa-star"></i></a></li>
-                                                </ul>
-                                            </div>
-                                            <h2 class="product-title"><a href="product-details.html">Poltry Farm Meat</a></h2>
-                                            <div class="product-price">
-                                                <span>$78.00</span>
-                                                <del>$85.00</del>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="tab-pane fade" id="liton_tab_3_2">
-                        <div class="ltn__product-tab-content-inner">
-                            <div class="row ltn__tab-product-slider-one-active slick-arrow-1">
-                                <!-- ltn__product-item -->
-                                <div class="col-lg-12">
-                                    <div class="ltn__product-item ltn__product-item-3 text-center">
-                                        <div class="product-img">
-                                            <a href="product-details.html"><img src="{{ asset('assets/client/img/product/16.png') }}" alt="#"></a>
-                                            <div class="product-badge">
-                                                <ul>
-                                                    <li class="sale-badge">-19%</li>
-                                                </ul>
-                                            </div>
-                                            <div class="product-hover-action">
-                                                <ul>
-                                                    <li>
-                                                        <a href="#" title="Quick View" data-bs-toggle="modal" data-bs-target="#quick_view_modal">
-                                                            <i class="far fa-eye"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" title="Add to Cart" data-bs-toggle="modal" data-bs-target="#add_to_cart_modal">
-                                                            <i class="fas fa-shopping-cart"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" title="Wishlist" data-bs-toggle="modal" data-bs-target="#liton_wishlist_modal">
-                                                            <i class="far fa-heart"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="product-info">
-                                            <div class="product-ratting">
-                                                <ul>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star-half-alt"></i></a></li>
-                                                    <li><a href="#"><i class="far fa-star"></i></a></li>
-                                                    <li class="review-total"> <a href="#"> (24)</a></li>
-                                                </ul>
-                                            </div>
-                                            <h2 class="product-title"><a href="product-details.html">Carrots Group Scal</a></h2>
-                                            <div class="product-price">
-                                                <span>$32.00</span>
-                                                <del>$46.00</del>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ltn__product-item ltn__product-item-3 text-center">
-                                        <div class="product-img">
-                                            <a href="product-details.html"><img src="{{ asset('assets/client/img/product/10.png') }}" alt="#"></a>
-                                            <div class="product-badge">
-                                                <ul>
-                                                    <li class="sale-badge">New</li>
-                                                </ul>
-                                            </div>
-                                            <div class="product-hover-action">
-                                                <ul>
-                                                    <li>
-                                                        <a href="#" title="Quick View" data-bs-toggle="modal" data-bs-target="#quick_view_modal">
-                                                            <i class="far fa-eye"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" title="Add to Cart" data-bs-toggle="modal" data-bs-target="#add_to_cart_modal">
-                                                            <i class="fas fa-shopping-cart"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" title="Wishlist" data-bs-toggle="modal" data-bs-target="#liton_wishlist_modal">
-                                                            <i class="far fa-heart"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="product-info">
-                                            <div class="product-ratting">
-                                                <ul>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star-half-alt"></i></a></li>
-                                                    <li><a href="#"><i class="far fa-star"></i></a></li>
-                                                </ul>
-                                            </div>
-                                            <h2 class="product-title"><a href="product-details.html">Poltry Farm Meat</a></h2>
-                                            <div class="product-price">
-                                                <span>$78.00</span>
-                                                <del>$85.00</del>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="liton_tab_3_3">
-                        <div class="ltn__product-tab-content-inner">
-                            <div class="row ltn__tab-product-slider-one-active slick-arrow-1">
-                                <!-- ltn__product-item -->
-                                <div class="col-lg-12">
-                                    <div class="ltn__product-item ltn__product-item-3 text-center">
-                                        <div class="product-img">
-                                            <a href="product-details.html"><img src="{{ asset('assets/client/img/product/6.png') }}" alt="#"></a>
-                                            <div class="product-badge">
-                                                <ul>
-                                                    <li class="sale-badge">-19%</li>
-                                                </ul>
-                                            </div>
-                                            <div class="product-hover-action">
-                                                <ul>
-                                                    <li>
-                                                        <a href="#" title="Quick View" data-bs-toggle="modal" data-bs-target="#quick_view_modal">
-                                                            <i class="far fa-eye"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" title="Add to Cart" data-bs-toggle="modal" data-bs-target="#add_to_cart_modal">
-                                                            <i class="fas fa-shopping-cart"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" title="Wishlist" data-bs-toggle="modal" data-bs-target="#liton_wishlist_modal">
-                                                            <i class="far fa-heart"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="product-info">
-                                            <div class="product-ratting">
-                                                <ul>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star-half-alt"></i></a></li>
-                                                    <li><a href="#"><i class="far fa-star"></i></a></li>
-                                                    <li class="review-total"> <a href="#"> (24)</a></li>
-                                                </ul>
-                                            </div>
-                                            <h2 class="product-title"><a href="product-details.html">Carrots Group Scal</a></h2>
-                                            <div class="product-price">
-                                                <span>$32.00</span>
-                                                <del>$46.00</del>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ltn__product-item ltn__product-item-3 text-center">
-                                        <div class="product-img">
-                                            <a href="product-details.html"><img src="{{ asset('assets/client/img/product/12.png') }}" alt="#"></a>
-                                            <div class="product-badge">
-                                                <ul>
-                                                    <li class="sale-badge">New</li>
-                                                </ul>
-                                            </div>
-                                            <div class="product-hover-action">
-                                                <ul>
-                                                    <li>
-                                                        <a href="#" title="Quick View" data-bs-toggle="modal" data-bs-target="#quick_view_modal">
-                                                            <i class="far fa-eye"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" title="Add to Cart" data-bs-toggle="modal" data-bs-target="#add_to_cart_modal">
-                                                            <i class="fas fa-shopping-cart"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" title="Wishlist" data-bs-toggle="modal" data-bs-target="#liton_wishlist_modal">
-                                                            <i class="far fa-heart"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="product-info">
-                                            <div class="product-ratting">
-                                                <ul>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star-half-alt"></i></a></li>
-                                                    <li><a href="#"><i class="far fa-star"></i></a></li>
-                                                </ul>
-                                            </div>
-                                            <h2 class="product-title"><a href="product-details.html">Poltry Farm Meat</a></h2>
-                                            <div class="product-price">
-                                                <span>$78.00</span>
-                                                <del>$85.00</del>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="liton_tab_3_4">
-                        <div class="ltn__product-tab-content-inner">
-                            <div class="row ltn__tab-product-slider-one-active slick-arrow-1">
-                                <!-- ltn__product-item -->
-                                <div class="col-lg-12">
-                                    <div class="ltn__product-item ltn__product-item-3 text-center">
-                                        <div class="product-img">
-                                            <a href="product-details.html"><img src="{{ asset('assets/client/img/product/3.png') }}" alt="#"></a>
-                                            <div class="product-badge">
-                                                <ul>
-                                                    <li class="sale-badge">-19%</li>
-                                                </ul>
-                                            </div>
-                                            <div class="product-hover-action">
-                                                <ul>
-                                                    <li>
-                                                        <a href="#" title="Quick View" data-bs-toggle="modal" data-bs-target="#quick_view_modal">
-                                                            <i class="far fa-eye"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" title="Add to Cart" data-bs-toggle="modal" data-bs-target="#add_to_cart_modal">
-                                                            <i class="fas fa-shopping-cart"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" title="Wishlist" data-bs-toggle="modal" data-bs-target="#liton_wishlist_modal">
-                                                            <i class="far fa-heart"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="product-info">
-                                            <div class="product-ratting">
-                                                <ul>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star-half-alt"></i></a></li>
-                                                    <li><a href="#"><i class="far fa-star"></i></a></li>
-                                                    <li class="review-total"> <a href="#"> (24)</a></li>
-                                                </ul>
-                                            </div>
-                                            <h2 class="product-title"><a href="product-details.html">Carrots Group Scal</a></h2>
-                                            <div class="product-price">
-                                                <span>$32.00</span>
-                                                <del>$46.00</del>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ltn__product-item ltn__product-item-3 text-center">
-                                        <div class="product-img">
-                                            <a href="product-details.html"><img src="{{ asset('assets/client/img/product/5.png') }}" alt="#"></a>
-                                            <div class="product-badge">
-                                                <ul>
-                                                    <li class="sale-badge">New</li>
-                                                </ul>
-                                            </div>
-                                            <div class="product-hover-action">
-                                                <ul>
-                                                    <li>
-                                                        <a href="#" title="Quick View" data-bs-toggle="modal" data-bs-target="#quick_view_modal">
-                                                            <i class="far fa-eye"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" title="Add to Cart" data-bs-toggle="modal" data-bs-target="#add_to_cart_modal">
-                                                            <i class="fas fa-shopping-cart"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" title="Wishlist" data-bs-toggle="modal" data-bs-target="#liton_wishlist_modal">
-                                                            <i class="far fa-heart"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="product-info">
-                                            <div class="product-ratting">
-                                                <ul>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star-half-alt"></i></a></li>
-                                                    <li><a href="#"><i class="far fa-star"></i></a></li>
-                                                </ul>
-                                            </div>
-                                            <h2 class="product-title"><a href="product-details.html">Poltry Farm Meat</a></h2>
-                                            <div class="product-price">
-                                                <span>$78.00</span>
-                                                <del>$85.00</del>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-pane fade" id="liton_tab_3_5">
-                        <div class="ltn__product-tab-content-inner">
-                            <div class="row ltn__tab-product-slider-one-active slick-arrow-1">
-                                <!-- ltn__product-item -->
-                                <div class="col-lg-12">
-                                    <div class="ltn__product-item ltn__product-item-3 text-center">
-                                        <div class="product-img">
-                                            <a href="product-details.html"><img src="{{ asset('assets/client/img/product/7.png') }}" alt="#"></a>
-                                            <div class="product-badge">
-                                                <ul>
-                                                    <li class="sale-badge">-19%</li>
-                                                </ul>
-                                            </div>
-                                            <div class="product-hover-action">
-                                                <ul>
-                                                    <li>
-                                                        <a href="#" title="Quick View" data-bs-toggle="modal" data-bs-target="#quick_view_modal">
-                                                            <i class="far fa-eye"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" title="Add to Cart" data-bs-toggle="modal" data-bs-target="#add_to_cart_modal">
-                                                            <i class="fas fa-shopping-cart"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" title="Wishlist" data-bs-toggle="modal" data-bs-target="#liton_wishlist_modal">
-                                                            <i class="far fa-heart"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="product-info">
-                                            <div class="product-ratting">
-                                                <ul>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star-half-alt"></i></a></li>
-                                                    <li><a href="#"><i class="far fa-star"></i></a></li>
-                                                    <li class="review-total"> <a href="#"> (24)</a></li>
-                                                </ul>
-                                            </div>
-                                            <h2 class="product-title"><a href="product-details.html">Carrots Group Scal</a></h2>
-                                            <div class="product-price">
-                                                <span>$32.00</span>
-                                                <del>$46.00</del>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ltn__product-item ltn__product-item-3 text-center">
-                                        <div class="product-img">
-                                            <a href="product-details.html"><img src="{{ asset('assets/client/img/product/13.png') }}" alt="#"></a>
-                                            <div class="product-badge">
-                                                <ul>
-                                                    <li class="sale-badge">New</li>
-                                                </ul>
-                                            </div>
-                                            <div class="product-hover-action">
-                                                <ul>
-                                                    <li>
-                                                        <a href="#" title="Quick View" data-bs-toggle="modal" data-bs-target="#quick_view_modal">
-                                                            <i class="far fa-eye"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" title="Add to Cart" data-bs-toggle="modal" data-bs-target="#add_to_cart_modal">
-                                                            <i class="fas fa-shopping-cart"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#" title="Wishlist" data-bs-toggle="modal" data-bs-target="#liton_wishlist_modal">
-                                                            <i class="far fa-heart"></i></a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="product-info">
-                                            <div class="product-ratting">
-                                                <ul>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                    <li><a href="#"><i class="fas fa-star-half-alt"></i></a></li>
-                                                    <li><a href="#"><i class="far fa-star"></i></a></li>
-                                                </ul>
-                                            </div>
-                                            <h2 class="product-title"><a href="product-details.html">Poltry Farm Meat</a></h2>
-                                            <div class="product-price">
-                                                <span>$78.00</span>
-                                                <del>$85.00</del>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -769,35 +329,31 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="section-title-area ltn__section-title-2 text-center">
-                    <h1 class="section-title">Featured Products</h1>
+                    <h1 class="section-title">Sản phẩm bán chạy</h1>
                 </div>
             </div>
         </div>
         <div class="row ltn__tab-product-slider-one-active--- slick-arrow-1">
             <!-- ltn__product-item -->
+            @foreach ($bestSellingProducts as $product)
             <div class="col-lg-3 col-md-4 col-sm-6 col-6">
                 <div class="ltn__product-item ltn__product-item-3 text-left">
                     <div class="product-img">
-                        <a href="product-details.html"><img src="{{ asset('assets/client/img/product/1.png') }}" alt="#"></a>
-                        <div class="product-badge">
-                            <ul>
-                                <li class="sale-badge">New</li>
-                            </ul>
-                        </div>
+                        <a href="#"><img src="{{ $product->image }}" alt="#"></a>
                         <div class="product-hover-action">
                             <ul>
                                 <li>
-                                    <a href="#" title="Quick View" data-bs-toggle="modal" data-bs-target="#quick_view_modal">
+                                    <a href="#" title="Xem nhanh" data-bs-toggle="modal" data-bs-target="#quick_view_modal">
                                         <i class="far fa-eye"></i>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" title="Add to Cart" data-bs-toggle="modal" data-bs-target="#add_to_cart_modal">
+                                    <a href="#" title="Thêm vào giỏ hàng" data-bs-toggle="modal" data-bs-target="#add_to_cart_modal">
                                         <i class="fas fa-shopping-cart"></i>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" title="Wishlist" data-bs-toggle="modal" data-bs-target="#liton_wishlist_modal">
+                                    <a href="#" title="Yêu thích" data-bs-toggle="modal" data-bs-target="#liton_wishlist_modal">
                                         <i class="far fa-heart"></i></a>
                                 </li>
                             </ul>
@@ -813,14 +369,14 @@
                                 <li><a href="#"><i class="far fa-star"></i></a></li>
                             </ul>
                         </div>
-                        <h2 class="product-title"><a href="product-details.html">Carrots Group Scal</a></h2>
+                        <h2 class="product-title"><a href="product-details.html">{{ $product->name }}</a></h2>
                         <div class="product-price">
-                            <span>$32.00</span>
-                            <del>$46.00</del>
+                            <span>${{ number_format($product->price, 2) }} VNĐ</span>
                         </div>
-                    </div>
+                    </div> 
                 </div>
-            </div>
+            </div>            
+            @endforeach
         </div>
     </div>
 </div>
