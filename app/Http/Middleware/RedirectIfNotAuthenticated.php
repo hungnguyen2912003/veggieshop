@@ -18,11 +18,11 @@ class RedirectIfNotAuthenticated
     {
         if ($request->is('admin') || $request->is('admin/*')) {
             if (!Auth::guard('admin')->check()) {
-                toastr('Please log in as an admin to access this page.', 'warning');
+                toastr('Vui lòng đăng nhập với tư cách quản trị viên.', 'warning');
             }
         } else {
             if (!Auth::guard('web')->check()) {
-                toastr('Please log in to use this feature.', 'warning');
+                toastr('Vui lòng đăng nhập để sử dụng chức năng này.', 'warning');
                 return redirect()->route('login');
             }
         }

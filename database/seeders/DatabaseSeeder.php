@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
@@ -25,11 +26,12 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-            AdminStaffsTableSeeder::class,
-            UsersTableSeeder::class,
             RolesTableSeeder::class,
             PermissionsTableSeeder::class,
             RolePermissionTableSeeder::class,
+            AdminStaffsTableSeeder::class,
+            UsersTableSeeder::class,
+            CategorySeeder::class,
         ]);
     }
 }
