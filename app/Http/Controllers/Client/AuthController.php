@@ -26,15 +26,17 @@ class AuthController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'password' => 'required|string|min:6|confirmed',
         ], [
-            'name.required' => 'Please provide your name.',
-            'email.required' => 'An email address is required for registration.',
-            'email.email' => 'Please provide a valid email address.',
-            'email.unique' => 'This email address is already registered.',
-            'password.required' => 'A password is required to secure your account.',
-            'password.min' => 'Your password must be at least 8 characters long.',
-            'password.confirmed' => 'Password confirmation does not match.',
+            'name.required' => 'Vui lòng nhập tên của bạn.',
+            'name.max' => 'Tên của bạn không được vượt quá 255 ký tự.',
+            'email.required' => 'Vui lòng nhập địa chỉ email.',
+            'email.email' => 'Vui lòng nhập địa chỉ email hợp lệ.',
+            'email.max' => 'Địa chỉ email không được vượt quá 255 ký tự.',
+            'email.unique' => 'Địa chỉ email đã được sử dụng.',
+            'password.required' => 'Vui lòng nhập mật khẩu.',
+            'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự.',
+            'password.confirmed' => 'Mật khẩu xác nhận không khớp.',
         ]);
 
         // Check if exist user with same email

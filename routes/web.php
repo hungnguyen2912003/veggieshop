@@ -42,5 +42,6 @@ Route::middleware('auth')->group(function () {
     Route::prefix('account')->name('account.')->group(function () {
         Route::get('/', [AccountController::class, 'index']);
         Route::post('/update', [AccountController::class, 'update'])->name('update');
+        Route::post('/change-password', [AccountController::class, 'changePassword'])->name('change-password');
     });
 });

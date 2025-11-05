@@ -1,8 +1,8 @@
 @extends('layouts.client.client')
 
-@section('title', 'Account')
+@section('title', 'Tài khoản')
 
-@section('breadcrumb', 'My Account')
+@section('breadcrumb', 'Tài khoản của tôi')
 
 @section('content')
 <div class="liton__wishlist-area pb-70">
@@ -132,20 +132,20 @@
                                     <div class="tab-pane fade" id="liton_tab_password">
                                         <div class="ltn__myaccount-tab-content-inner">
                                             <div class="ltn__form-box">
-                                                <form action="#" method="POST" id="change-password-form">
+                                                <form action="{{ route('account.change-password') }}" method="POST" id="change-password-form">
                                                     <fieldset>
                                                         <div class="row mb-50">
                                                             <div class="col-md-12">
                                                                 <label>Mật khẩu hiện tại:</label>
-                                                                <input type="password" name="ltn__current-password">
+                                                                <input type="password" name="ltn__current-password" placeholder="Nhập mật khẩu hiện tại">
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <label>Mật khẩu mới:</label>
-                                                                <input type="password" name="ltn__new-password">
+                                                                <input type="password" name="ltn__new-password" placeholder="Nhập mật khẩu mới">
                                                             </div>
                                                             <div class="col-md-12">
                                                                 <label>Nhập lại mật khẩu mới:</label>
-                                                                <input type="password" name="ltn__confirm-new-password" autocomplete="new-password">
+                                                                <input type="password" name="ltn__confirm-new-password" autocomplete="new-password" placeholder="Nhập lại mật khẩu mới">
                                                             </div>
                                                         </div>
                                                     </fieldset>
