@@ -8,7 +8,7 @@
                     </div>
                     <div class="ltn__breadcrumb-list">
                         <ul>
-                            <li><a href="/">Home</a></li>
+                            <li><a href="/">Trang chủ</a></li>
                             <li>@yield('breadcrumb')</li>
                         </ul>
                     </div>

@@ -1,6 +1,6 @@
 @extends('layouts.client.home-client')
 
-@section('title', 'Home')
+@section('title', 'Trang chủ')
 
 @section('content')
 

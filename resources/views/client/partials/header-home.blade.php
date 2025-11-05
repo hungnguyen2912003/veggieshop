@@ -69,14 +69,13 @@
                         <nav>
                             <div class="ltn__main-menu">
                                 <ul>
-                                    <li class="menu-icon"><a href="#">Home</a>
+                                    <li class="menu-icon"><a href="#">Trang chủ</a>
                                     </li>
-                                    <li class="menu-icon"><a href="#">About</a>
+                                    <li class="menu-icon"><a href="#">Về chúng tôi</a>
                                     </li>
-                                    <li class="menu-icon"><a href="#">Shop</a>
+                                    <li class="menu-icon"><a href="#">Sản phẩm</a>
                                     </li>
-                                    <li><a href="contact.html">Contact</a></li>
-                                    <li class="special-link"><a href="contact.html">GET A QUOTE</a></li>
+                                    <li><a href="/contact">Liên hệ</a></li>
                                 </ul>
                             </div>
                         </nav>
@@ -106,19 +105,16 @@
                             <li>
                                 <a href="#"><i class="icon-user"></i></a>
                                 <ul>
-                                    <li><a href="/login">Sign in</a></li>
-                                    <li><a href="/register">Register</a></li>
-                                    <li><a href="/account">My Account</a></li>
-                                    <li><a href="/wishlist">Wishlist</a></li>
+                                    <li><a href="/login">Đăng nhập</a></li>
+                                    <li><a href="/register">Đăng ký</a></li>
+                                    <li><a href="/account">Tài khoản của tôi</a></li>
+                                    <li><a href="/wishlist">Danh sách ước</a></li>
                                     <li>
-                                        <a href="{{ route('logout') }}"
-                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        Logout
-                                        </a>
+                                        <a href="{{ route('logout') }}">Đăng xuất</a>
                                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                             @csrf
                                         </form>
-                                    </li>                                    
+                                    </li>                                      
                                 </ul>
                             </li>
                         </ul>

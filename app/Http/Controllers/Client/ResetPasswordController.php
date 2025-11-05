@@ -20,14 +20,15 @@ class ResetPasswordController extends Controller
         $request->validate([
             'token' => 'required',
             'email' => 'required|email|exists:users,email',
-            'password' => 'required|min:8|confirmed',
+            'password' => 'required|min:6|confirmed',
         ], [
-            'email.required' => 'Please enter your email address.',
-            'email.email' => 'Please enter a valid email address.',
-            'email.exists' => 'We can\'t find a user with that email address.',
-            'password.required' => 'Please enter a new password.',
-            'password.min' => 'Password must be at least 8 characters.',
-            'password.confirmed' => 'Password confirmation does not match.',
+            'token.required' => 'Mã token không hợp lệ.',
+            'email.required' => 'Vui lòng nhập địa chỉ email.',
+            'email.email' => 'Vui lòng nhập địa chỉ email hợp lệ.',
+            'email.exists' => 'Địa chỉ email này không tồn tại trong hệ thống.',
+            'password.required' => 'Vui lòng nhập mật khẩu mới.',
+            'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự.',
+            'password.confirmed' => 'Mật khẩu xác nhận không khớp.',
         ]);
 
         // Sử dụng Password Broker của Laravel để xử lý chính xác
@@ -41,11 +42,11 @@ class ResetPasswordController extends Controller
         );
 
         if ($status === Password::PASSWORD_RESET) {
-            toastr()->success('Your password has been reset successfully!');
+            toastr()->success('Mật khẩu của bạn đã được đặt lại thành công. Vui lòng đăng nhập với mật khẩu mới.');
             return redirect()->route('login');
         }
 
-        toastr()->error('Invalid or expired reset link.');
+        toastr()->error('Đặt lại mật khẩu không thành công. Vui lòng thử lại.');
         return back()->withInput($request->only('email'));
     }
 }

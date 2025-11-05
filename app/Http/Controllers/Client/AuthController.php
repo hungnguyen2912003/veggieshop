@@ -15,7 +15,6 @@ use function Flasher\Toastr\Prime\toastr;
 
 class AuthController extends Controller
 {
-
     public function showRegistrationForm()
     {
         return view('client.pages.register');
@@ -28,45 +27,46 @@ class AuthController extends Controller
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
         ], [
-            'name.required' => 'Vui lòng nhập tên của bạn.',
-            'name.max' => 'Tên của bạn không được vượt quá 255 ký tự.',
+            'name.required' => 'Vui lòng nhập họ và tên của bạn.',
+            'name.max' => 'Họ và tên không được vượt quá 255 ký tự.',
             'email.required' => 'Vui lòng nhập địa chỉ email.',
             'email.email' => 'Vui lòng nhập địa chỉ email hợp lệ.',
             'email.max' => 'Địa chỉ email không được vượt quá 255 ký tự.',
-            'email.unique' => 'Địa chỉ email đã được sử dụng.',
+            'email.unique' => 'Địa chỉ email này đã được sử dụng.',
             'password.required' => 'Vui lòng nhập mật khẩu.',
             'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự.',
             'password.confirmed' => 'Mật khẩu xác nhận không khớp.',
         ]);
 
-        // Check if exist user with same email
+        // Kiểm tra xem email đã tồn tại chưa
         $userExists = User::where('email', $request->email)->first();
         if ($userExists) {
             if ($userExists->isPending()) {
-                toastr()->error('Email already registered but not verified. Please check your email for verification link.');
+                toastr()->error('Email này đã được đăng ký nhưng chưa được xác minh. Vui lòng kiểm tra email để kích hoạt tài khoản.');
                 return redirect()->back()->withInput();
             } else {
-                toastr()->error('Email already registered. Please use a different email.');
+                toastr()->error('Email này đã được đăng ký. Vui lòng sử dụng email khác.');
                 return redirect()->back()->withInput();
             }
         }
 
-        // Create token
+        // Tạo mã token kích hoạt
         $token = Str::random(64);
 
-        // Create user
+        // Tạo người dùng mới
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'status' => 'pending',
             'activation_token' => $token,
-            'role_id' => 3, // Client role
+            'role_id' => 3, // Khách hàng
         ]);
 
+        // Gửi email kích hoạt
         Mail::to($user->email)->send(new ActivationMail($user, $token));
 
-        toastr()->success('Registration successful! Please check your email to verify your account.');
+        toastr()->success('Đăng ký thành công! Vui lòng kiểm tra email để xác minh tài khoản của bạn.');
         return redirect()->route('register.success', ['email' => $request->email]);
     }
 
@@ -75,7 +75,7 @@ class AuthController extends Controller
         $user = User::where('activation_token', $token)->first();
 
         if (!$user) {
-            toastr()->error('Invalid activation token. Please check your email for the correct link.');
+            toastr()->error('Mã kích hoạt không hợp lệ. Vui lòng kiểm tra lại liên kết trong email.');
             return redirect()->route('login');
         }
 
@@ -83,7 +83,7 @@ class AuthController extends Controller
         $user->activation_token = null;
         $user->save();
 
-        toastr()->success('Your account has been successfully activated.');
+        toastr()->success('Tài khoản của bạn đã được kích hoạt thành công!');
         return view('client.pages.activation-success', ['user' => $user]);
     }
 
@@ -91,13 +91,16 @@ class AuthController extends Controller
     {
         $request->validate([
             'email' => 'required|email|exists:users,email'
+        ], [
+            'email.required' => 'Vui lòng nhập địa chỉ email.',
+            'email.email' => 'Vui lòng nhập địa chỉ email hợp lệ.',
+            'email.exists' => 'Không tìm thấy tài khoản với địa chỉ email này.',
         ]);
 
         $user = User::where('email', $request->email)->first();
-        // Create token
-        $token = Str::random(64);
 
-        // Gán lại token mới
+        // Tạo token mới
+        $token = Str::random(64);
         $user->activation_token = $token;
         $user->save();
 
@@ -105,17 +108,17 @@ class AuthController extends Controller
         $lastResend = session('last_resend_' . $user->email);
         if ($lastResend && now()->diffInSeconds($lastResend) < 60) {
             $remaining = 60 - now()->diffInSeconds($lastResend);
-            toastr()->warning("Please wait {$remaining} seconds before resending.");
+            toastr()->warning("Vui lòng đợi {$remaining} giây trước khi gửi lại email kích hoạt.");
             return back();
         }
 
-        // Cập nhật thời điểm gửi lại mail
+        // Cập nhật thời điểm gửi lại
         session(['last_resend_' . $user->email => now()]);
 
-        // Gửi lại mail kích hoạt
+        // Gửi lại email kích hoạt
         Mail::to($user->email)->send(new ActivationMail($user, $token));
 
-        toastr()->success('A new activation email has been sent. Please check your inbox.');
+        toastr()->success('Email kích hoạt mới đã được gửi. Vui lòng kiểm tra hộp thư đến.');
         return back();
     }
 
@@ -136,29 +139,29 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required|string',
         ], [
-            'email.required' => 'Please enter your email address.',
-            'email.email' => 'Please enter a valid email address.',
-            'password.required' => 'Please enter your password.',
+            'email.required' => 'Vui lòng nhập địa chỉ email.',
+            'email.email' => 'Vui lòng nhập địa chỉ email hợp lệ.',
+            'password.required' => 'Vui lòng nhập mật khẩu.',
         ]);
 
-        // Kiểm tra tài khoản có status = active không
+        // Chỉ cho phép đăng nhập nếu tài khoản đã kích hoạt
         $credentials['status'] = 'active';
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
             if (in_array(Auth::user()->role->name, ['customer'])) {
-                toastr()->success('Login successful!');
+                toastr()->success('Đăng nhập thành công!');
                 return redirect()->route('home');
             } else {
                 Auth::logout();
-                toastr()->error('Access denied. Please use a customer account to log in.');
+                toastr()->error('Từ chối truy cập. Vui lòng sử dụng tài khoản khách hàng để đăng nhập.');
                 return redirect()->back()->withInput();
             }
         }
 
-        // Nếu tới đây nghĩa là login thất bại
-        toastr()->error('Invalid email or password. Please try again.');
+        // Nếu đăng nhập thất bại
+        toastr()->error('Email hoặc mật khẩu không đúng. Vui lòng thử lại.');
         return redirect()->back()->withInput();
     }
 
@@ -169,7 +172,7 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        toastr()->success('You have been logged out successfully.');
+        toastr()->success('Bạn đã đăng xuất thành công.');
         return redirect()->route('home');
     }
 }
