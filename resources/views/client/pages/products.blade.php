@@ -30,16 +30,11 @@
                     </ul>
                 </div>
                 <div class="tab-content">
+                    <div id="loading-spinner">
+                        <div class="loader"></div>
+                    </div>
                     <div class="tab-pane fade active show" id="liton_product_grid">
-                        <div class="ltn__product-tab-content-inner ltn__product-grid-view">
-                            <div class="row">
-                                <!-- ltn__product-item -->
-                                @foreach ($products as $product)
-                                    @include('client.components.product-grid', ['product' => $product])
-                                @endforeach
-                                <!--  -->
-                            </div>
-                        </div>
+                        @include('client.components.product-grid', ['products' => $products])
                     </div>
                 </div>
                 <div class="ltn__pagination-area text-center">
@@ -63,7 +58,7 @@
                         <h4 class="ltn__widget-title ltn__widget-title-border">Danh mục sản phẩm</h4>
                         <ul>
                             @foreach ($categories as $category)
-                            <li><a href="javascript:void(0)">{{ $category->name }} <span><i class="fas fa-long-arrow-alt-right"></i></span></a></li>
+                            <li><a href="javascript:void(0)" data-id="{{ $category->id }}" class="category-filter">{{ $category->name }} <span><i class="fas fa-long-arrow-alt-right"></i></span></a></li>
                             @endforeach
                         </ul>
                     </div>
