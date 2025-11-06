@@ -34,7 +34,9 @@
                         <div class="ltn__product-tab-content-inner ltn__product-grid-view">
                             <div class="row">
                                 <!-- ltn__product-item -->
-                                @include('client.components.product-grid')
+                                @foreach ($products as $product)
+                                    @include('client.components.product-grid', ['product' => $product])
+                                @endforeach
                                 <!--  -->
                             </div>
                         </div>
@@ -61,7 +63,7 @@
                         <h4 class="ltn__widget-title ltn__widget-title-border">Danh mục sản phẩm</h4>
                         <ul>
                             @foreach ($categories as $category)
-                            <li><a href="{{ route('products.category', $category->slug) }}">{{ $category->name }} <span><i class="fas fa-long-arrow-alt-right"></i></span></a></li>
+                            <li><a href="javascript:void(0)">{{ $category->name }} <span><i class="fas fa-long-arrow-alt-right"></i></span></a></li>
                             @endforeach
                         </ul>
                     </div>
@@ -83,9 +85,9 @@
                             @foreach ($products as $product)
                             <li>
                                 <div class="top-rated-product-item clearfix">
-                                    <div class="top-rated-product-img">
+                                    {{-- <div class="top-rated-product-img">
                                         <a href="{{ route('product.detail', $product->slug) }}"><img src="{{ asset('storage/uploads/products/' . $product->image) }}" alt="{{ $product->name }}"></a>
-                                    </div>
+                                    </div> --}}
                                     <div class="top-rated-product-info">
                                         <div class="product-ratting">
                                             <ul>
@@ -96,7 +98,7 @@
                                                 <li><a href="#"><i class="fas fa-star"></i></a></li>
                                             </ul>
                                         </div>
-                                        <h6><a href="{{ route('product.detail', $product->slug) }}">{{ $product->name }}</a></h6>
+                                        {{-- <h6><a href="{{ route('product.detail', $product->slug) }}">{{ $product->name }}</a></h6> --}}
                                         <div class="product-price">
                                             <span>{{ number_format($product->price, 0, ',', '.') }} VNĐ</span>
                                             <del>{{ number_format($product->price, 0, ',', '.') }} VNĐ</del>
@@ -118,15 +120,15 @@
                     <!-- Tagcloud Widget -->
                     <div class="widget ltn__tagcloud-widget">
                         <h4 class="ltn__widget-title ltn__widget-title-border">Tags phổ biến</h4>
-                        <ul>
+                        {{-- <ul>
                             @foreach ($tags as $tag)
                             <li><a href="#">{{ $tag->name }}</a></li>
                             @endforeach
-                        </ul>
+                        </ul> --}}
                     </div>
                     <!-- Banner Widget -->
                     <div class="widget ltn__banner-widget">
-                        <a href="{{ route('products') }}"><img src="{{ asset('assets/client/img/banner/banner-1.jpg') }}" alt="#"></a>
+                        <a href="{{ route('products.index') }}"><img src="{{ asset('assets/client/img/banner/banner-1.jpg') }}" alt="#"></a>
                     </div>
 
                 </aside>

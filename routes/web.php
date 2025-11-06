@@ -49,7 +49,7 @@ Route::middleware('auth')->group(function () {
     });
 });
 
-Route::get('/product', [ProductController::class, 'index']);
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
 
 Route::get('/about', function () {
     return view('client.page.about');

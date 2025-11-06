@@ -23,7 +23,7 @@
                         <li><a href="{{ route('faq') }}">Câu hỏi thường gặp</a></li>
                     </ul>
                 </li>
-                <li><a href="{{ route('shop') }}">Sản phẩm</a>
+                <li><a href="{{ route('products.index') }}">Sản phẩm</a>
                 </li>
                 <li><a href="{{ route('contact') }}">Liên hệ</a></li>
             </ul>
