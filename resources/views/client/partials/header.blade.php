@@ -71,11 +71,18 @@
                                 <ul>
                                     <li class="menu-icon"><a href="/">Trang chủ</a>
                                     </li>
-                                    <li class="menu-icon"><a href="/about">Về chúng tôi</a>
+                                    <li class="menu-icon"><a href="javascript:void(0)">Về chúng tôi</a>
+                                        <ul>
+                                            <li><a href="{{ route('about') }}">Về chúng tôi</a></li>
+                                            <li><a href="{{ route('service') }}">Dịch vụ</a></li>
+                                            <li><a href="{{ route('team') }}">Đội ngũ</a></li>
+                                            <li><a href="{{ route('faq') }}">Câu hỏi thường gặp</a></li>
+                                        </ul>
                                     </li>
-                                    <li class="menu-icon"><a href="/shop">Sản phẩm</a>
+                                    <li class="menu-icon"><a href="{{ route('shop') }}">Sản phẩm</a>
                                     </li>
-                                    <li><a href="/contact">Liên hệ</a></li>
+                                    <li><a href="{{ route('contact') }}">Liên hệ</a></li>
+                                    <li class="special-link"><a href="" class="special-link">YÊU CẦU BÁO GIÁ</a></li>
                                 </ul>
                             </div>
                         </nav>
@@ -105,16 +112,14 @@
                             <li>
                                 <a href="#"><i class="icon-user"></i></a>
                                 <ul>
-                                    <li><a href="/login">Đăng nhập</a></li>
-                                    <li><a href="/register">Đăng ký</a></li>
-                                    <li><a href="/account">Tài khoản của tôi</a></li>
-                                    <li><a href="/wishlist">Danh sách ước</a></li>
-                                    <li>
-                                        <a href="{{ route('logout') }}">Đăng xuất</a>
-                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                            @csrf
-                                        </form>
-                                    </li>                                      
+                                    @if (Auth::check())
+                                        <li><a href="{{ route('account.index') }}">Tài khoản của tôi</a></li>
+                                        <li><a href="">Yêu thích</a></li>
+                                        <li><a href="{{ route('logout') }}">Đăng xuất</a></li>
+                                    @else
+                                        <li><a href="{{ route('login') }}">Đăng nhập</a></li>
+                                        <li><a href="{{ route('register.form') }}">Đăng ký</a></li>
+                                    @endif                                      
                                 </ul>
                             </li>
                         </ul>

@@ -36,10 +36,10 @@ Route::get('/activate/{token}', [AuthController::class, 'activate'])->name('acti
 
 
 Route::middleware('auth')->group(function () {
-    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
     Route::prefix('account')->name('account.')->group(function () {
-        Route::get('/', [AccountController::class, 'index']);
+        Route::get('/', [AccountController::class, 'index'])->name('index');
         Route::post('/update', [AccountController::class, 'update'])->name('update');
         Route::post('/change-password', [AccountController::class, 'changePassword'])->name('change-password');
         Route::post('/addresses', [AccountController::class, 'addAddress'])->name('addresses.add');
@@ -47,3 +47,22 @@ Route::middleware('auth')->group(function () {
         Route::delete('/addresses/{id}', [AccountController::class, 'deleteAddress'])->name('addresses.delete');
     });
 });
+
+Route::get('/about', function () {
+    return view('client.page.about');
+})->name('about');
+Route::get('/shop', function () {
+    return view('client.page.shop');
+})->name('shop');
+Route::get('/contact', function () {
+    return view('client.page.contact');
+})->name('contact');
+Route::get('/service', function () {
+    return view('client.page.service');
+})->name('service');
+Route::get('/team', function () {
+    return view('client.page.team');
+})->name('team');
+Route::get('/faq', function () {
+    return view('client.page.faq');
+})->name('faq');
