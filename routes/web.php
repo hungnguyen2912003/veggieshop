@@ -6,6 +6,7 @@ use App\Http\Controllers\Client\ForgotPasswordController;
 use App\Http\Controllers\Client\ResetPasswordController;
 use App\Http\Controllers\Client\AccountController;
 use App\Http\Controllers\Client\HomeController;
+use App\Http\Controllers\Client\ProductController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -47,6 +48,8 @@ Route::middleware('auth')->group(function () {
         Route::delete('/addresses/{id}', [AccountController::class, 'deleteAddress'])->name('addresses.delete');
     });
 });
+
+Route::get('/product', [ProductController::class, 'index']);
 
 Route::get('/about', function () {
     return view('client.page.about');
