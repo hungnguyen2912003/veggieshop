@@ -1,6 +1,3 @@
-
-
-
 <div class="ltn__product-tab-content-inner ltn__product-grid-view">
     <div class="row">
         <!-- ltn__product-item -->
