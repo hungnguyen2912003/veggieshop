@@ -23,7 +23,7 @@ class ProductController extends Controller
 
     public function filter(Request $request)
     {
-        $query = Product::query();
+        $query = Product::with('firstImage')->where('status', 'in_stock');
         if ($request->has('category_id') && $request->category_id != '') {
             $query->where('category_id', $request->category_id);
         }
@@ -59,7 +59,8 @@ class ProductController extends Controller
         }
 
         return response()->json([
-            'products' => view('client.components.product-grid', compact('products'))->render()
+            'products' => view('client.components.product-grid', compact('products'))->render(),
+            'pagination' => $products->links('client.components.pagination.pagination_custom')->render()
         ]);
     }
 }

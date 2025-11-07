@@ -138,6 +138,15 @@ $(document).ready(function () {
         }
     });
 
+    let currentPage = 1;
+    $(document).on('click', '.pagination-link', function(e){
+        e.preventDefault();
+        let pageUrl = $(this).attr('href');
+        let page = pageUrl.split('page=')[1];
+        currentPage = page;
+        fetchProducts();
+    })
+
     function fetchProducts() {
         let category_id = $(".category-filter.active").data('id') || '';
         let minPrice = $(".slider-range").slider('values', 0);
@@ -151,7 +160,7 @@ $(document).ready(function () {
         });
 
         $.ajax({
-            url: 'products/filter',
+            url: 'products/filter?page=' + currentPage,
             type: "GET",
             data: {
                 category_id: category_id,
@@ -165,6 +174,7 @@ $(document).ready(function () {
             },
             success: function (response) {
                 $("#liton_product_grid").html(response.products);
+                $(".ltn__pagination").html(response.pagination);
             },
             error: function (xhr) {
                 toastr.error("Đã xảy ra lỗi, vui lòng thử lại!");
@@ -179,10 +189,12 @@ $(document).ready(function () {
     $('.category-filter').click(function() {
         $('.category-filter').removeClass('active');
         $(this).addClass('active');
+        currentPage = 1;
         fetchProducts();
     })
 
     $('#sort-by').click(function() {
+        currentPage = 1;
         fetchProducts();
     })
 
@@ -195,6 +207,7 @@ $(document).ready(function () {
             $( ".amount" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] + "VNĐ");
         },
         change: function(e, ui) {
+            currentPage = 1;
             fetchProducts();
         }
     });
