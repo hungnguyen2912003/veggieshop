@@ -1,6 +1,8 @@
+# Bỏ qua tất cả file
 *
-!*/
-!*.*
-!storage/uploads/users/default-avatar.png
-!storage/uploads/products/default-product.png
+# Giữ lại file .gitignore
 !.gitignore
+# Giữ lại ảnh mặc định avatar
+!uploads/users/default-avatar.png
+# Giữ lại ảnh mặc định sản phẩm
+!uploads/products/default-product.png
