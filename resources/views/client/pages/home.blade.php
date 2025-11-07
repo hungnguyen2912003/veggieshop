@@ -246,7 +246,7 @@
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a href="#" title="Thêm vào giỏ hàng" data-bs-toggle="modal" data-bs-target="#add_to_cart_modal">
+                                                            <a href="#" class="add-to-cart-btn" data-id="{{ $product->id }}" title="Thêm vào giỏ hàng" data-bs-toggle="modal" data-bs-target="#add_to_cart_modal">
                                                                 <i class="fas fa-shopping-cart"></i>
                                                             </a>
                                                         </li>

@@ -211,5 +211,88 @@ $(document).ready(function () {
             fetchProducts();
         }
     });
-    $( ".amount" ).val($( ".slider-range" ).slider( "values", 0 ) + $( ".slider-range" ).slider( "values", 1 ) + " VNĐ"); 
+    $( ".amount" ).val($( ".slider-range" ).slider( "values", 0 ) + $( ".slider-range" ).slider( "values", 1 ) + " VNĐ");
+
+    $(document).on('click', '.qtybutton', function() {
+        var button = $(this);
+        var input = button.siblings('input');
+        var oldValue = parseInt(input.val());
+        var maxStock = parseInt(input.data('max'));
+
+        if(button.hasClass('inc')){
+            if(oldValue < maxStock) {
+                input.val(oldValue + 1);
+            }
+        } else {
+            if (oldValue > 1) {
+                input.val(oldValue - 1);
+            }
+        }
+    })
+
+    //Add to cart
+    $(document).on('click', '.add-to-cart-btn', function(e){
+        e.preventDefault();
+
+        let productId = $(this).data('id');
+        let quantity = $(this).closest('li').prev().find('.cart-plus-minus-box').val();
+
+        quantity = quantity ? quantity : 1;
+
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            }
+        });
+
+        $.ajax({
+            url: '/cart/add',
+            type: "POST",
+            data: {
+                product_id: productId,
+                quantity: quantity
+            },
+            success: function (response) {
+                $('#quick_view_modal-' + productId).modal('hide');
+                $('#add_to_cart_modal-' + productId).modal('show');
+                $('#cart_count').text(response.cart_count);
+                toastr.success('Đã thêm vào giỏ hàng!');
+            },
+            error: function (xhr) {
+                toastr.error("Đã xảy ra lỗi, vui lòng thử lại!");
+            }
+        });        
+    })
+
+    //Mini cart
+    $('.mini-cart-icon').on('click', function(e) {
+        e.preventDefault();
+
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            }
+        });
+        
+        $.ajax({
+            url: '/mini-cart',
+            type: 'GET',
+            success: function(response) {
+                if(response.status) {
+                    $('#ltn__utilize-cart-menu .ltn__utilize-menu-inner').html(response.html);
+                    $('#ltn__utilize-cart-menu').addClass('ltn__utilize-open');
+                } else {
+                    toastr.error('Không thể tải giỏ hàng');
+                }
+            },
+            error: function () {
+                toastr.error('Đã xảy ra lỗi khi tải giỏ hàng');
+            }
+        })
+    });
+
+    $(document).on('click', '.ltn__utilize-close', function() {
+        $('#ltn__utilize-cart-menu').removeClass('ltn__utilize-open');
+        $('#ltn__utilize-overlay').hide();
+    })
 })

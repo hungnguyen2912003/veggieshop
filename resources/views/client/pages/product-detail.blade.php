@@ -62,7 +62,7 @@
                                             </div>
                                         </li>
                                         <li>
-                                            <a href="#" class="theme-btn-1 btn btn-effect-1" title="Thêm vào giỏ hàng" data-bs-toggle="modal" data-bs-target="#add_to_cart_modal">
+                                            <a href="#" class="theme-btn-1 btn btn-effect-1 add-to-cart-btn" data-id="{{ $product->id }}" title="Thêm vào giỏ hàng" data-bs-toggle="modal" data-bs-target="#add_to_cart_modal">
                                                 <i class="fas fa-shopping-cart"></i>
                                                 <span>Thêm vào giỏ hàng</span>
                                             </a>
@@ -196,6 +196,8 @@
     </div>
 </div>
 <!-- SHOP DETAILS AREA END -->
+
+@include('client.components.includes.include-modals')
 
 <!-- PRODUCT SLIDER AREA START -->
 <div class="ltn__product-slider-area ltn__product-gutter pb-70">

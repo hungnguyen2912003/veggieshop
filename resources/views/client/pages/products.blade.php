@@ -72,23 +72,18 @@
                             @foreach ($products as $product)
                             <li>
                                 <div class="top-rated-product-item clearfix">
-                                    {{-- <div class="top-rated-product-img">
-                                        <a href="{{ route('product.detail', $product->slug) }}"><img src="{{ asset('storage/uploads/products/' . $product->image) }}" alt="{{ $product->name }}"></a>
-                                    </div> --}}
+                                    <div class="top-rated-product-img">
+                                        <a href="{{ route('products.detail', $product->slug) }}"><img src="{{ $product->image_url }}" alt="{{ $product->name }}"></a>
+                                    </div>
                                     <div class="top-rated-product-info">
                                         <div class="product-ratting">
                                             <ul>
                                                 <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                <li><a href="#"><i class="fas fa-star"></i></a></li>
                                             </ul>
                                         </div>
-                                        {{-- <h6><a href="{{ route('product.detail', $product->slug) }}">{{ $product->name }}</a></h6> --}}
+                                        <h6><a href="{{ route('products.detail', $product->slug) }}">{{ $product->name }}</a></h6>
                                         <div class="product-price">
                                             <span>{{ number_format($product->price, 0, ',', '.') }} VNĐ</span>
-                                            <del>{{ number_format($product->price, 0, ',', '.') }} VNĐ</del>
                                         </div>
                                     </div>
                                 </div>

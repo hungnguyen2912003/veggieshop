@@ -14,17 +14,17 @@
                     <div class="product-hover-action">
                         <ul>
                             <li>
-                                <a href="javascript:void(0)" title="Xem chi tiết" data-bs-toggle="modal" data-bs-target="#quick_view_modal">
+                                <a href="javascript:void(0)" title="Xem chi tiết" data-bs-toggle="modal" data-bs-target="#quick_view_modal-{{ $product->id }}">
                                     <i class="far fa-eye"></i>
                                 </a>
                             </li>
                             <li>
-                                <a href="javascript:void(0)" title="Thêm vào giỏ hàng" data-bs-toggle="modal" data-bs-target="#add_to_cart_modal">
+                                <a href="javascript:void(0)" class="add-to-cart-btn" data-id="{{ $product->id }}" title="Thêm vào giỏ hàng" data-bs-toggle="modal" data-bs-target="#add_to_cart_modal-{{ $product->id }}">
                                     <i class="fas fa-shopping-cart"></i>
                                 </a>
                             </li>
                             <li>
-                                <a href="javascript:void(0)" title="Thêm vào danh sách yêu thích" data-bs-toggle="modal" data-bs-target="#liton_wishlist_modal">
+                                <a href="javascript:void(0)" title="Thêm vào danh sách yêu thích" data-bs-toggle="modal" data-bs-target="#liton_wishlist_modal-{{ $product->id }}">
                                     <i class="far fa-heart"></i></a>
                             </li>
                         </ul>
@@ -52,5 +52,10 @@
     </div>
 </div>
 
+@foreach ($products as $product)
+    @include('client.components.modals.quick-view-modal', ['product' => $product])
+    @include('client.components.modals.add-to-cart-modal', ['product' => $product])
+    @include('client.components.modals.wishlist-modal', ['product' => $product])
+@endforeach
 
 
