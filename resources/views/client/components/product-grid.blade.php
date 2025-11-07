@@ -5,7 +5,7 @@
         <div class="col-xl-4 col-sm-6 col-6">
             <div class="ltn__product-item ltn__product-item-3 text-center">
                 <div class="product-img">
-                    <a href="javascript:void(0)"><img src="{{ $product->image_url }}" alt="{{ $product->name }}"></a>
+                    <a href="{{ route('products.detail', $product->slug) }}"><img src="{{ $product->image_url }}" alt="{{ $product->name }}"></a>
                     <div class="product-badge">
                         <ul>
                             <li class="sale-badge">Mới</li>
@@ -40,7 +40,7 @@
                             <li><a href="#"><i class="far fa-star"></i></a></li>
                         </ul>
                     </div>
-                    <h2 class="product-title"><a href="javascript:void(0)">{{ $product->name }}</a></h2>
+                    <h2 class="product-title"><a href="{{ route('products.detail', $product->slug) }}">{{ $product->name }}</a></h2>
                     <div class="product-price">
                         <span>{{ number_format($product->price, 0, ',', '.') }} VNĐ</span>
                     </div>

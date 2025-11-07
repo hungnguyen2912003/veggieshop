@@ -63,4 +63,23 @@ class ProductController extends Controller
             'pagination' => $products->links('client.components.pagination.pagination_custom')->render()
         ]);
     }
+
+    public function detail($slug)
+    {
+        $product = Product::with(['category', 'images'])->where('slug', $slug)->first();
+
+        //Get products in the same category
+        $relatedProducts = Product::where('category_id', $product->category_id)
+            ->where('id', '!=', $product->id)
+            ->limit(6)
+            ->get();
+
+        foreach ($relatedProducts as $relatedProduct) {
+            $relatedProduct->image_url = $relatedProduct->firstImage
+                ? asset('storage/uploads/products/' . $relatedProduct->firstImage->image)
+                : asset('storage/uploads/products/default-product.png');
+        }
+
+        return view('client.pages.product-detail', compact('product', 'relatedProducts'));
+    }
 }
