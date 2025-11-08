@@ -16,7 +16,10 @@
             <div class="mini-cart-item clearfix">
                 <div class="mini-cart-img">
                     <a href="#"><img src="{{ asset($product->images->first()->image_path ?? asset('storage/uploads/products/default-product.png')) }}" alt="Image"></a>
-                    <span class="mini-cart-item-delete" data-id="{{ $item->id }}"><i class="icon-cancel"></i></span>
+                    <span class="mini-cart-item-delete"
+                        data-id="{{ auth()->check() ? $item->id : $item['product_id'] }}">
+                        <i class="icon-cancel"></i>
+                    </span>
                 </div>
                 <div class="mini-cart-info">
                     <h6><a href="{{ route('products.detail', $product->slug) }}">{{ $product->name }}</a></h6>
@@ -24,6 +27,11 @@
                 </div>
             </div>
         @endforeach
+    @else
+        <div class="text-center py-4">
+            <img src="{{ asset('assets/client/img/empty-cart.png') }}" alt="Empty Cart" width="80" class="mb-3">
+            <p class="text-muted">Giỏ hàng của bạn đang trống</p>
+        </div>
     @endif
 </div>
 <div class="mini-cart-footer">

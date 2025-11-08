@@ -79,4 +79,34 @@ class CartController extends Controller
             'html' => view('client.components.includes.mini_cart', compact('cartItems'))->render(),
         ]);
     }
+
+    public function removeMiniCart(Request $request)
+    {
+        $request->validate(['product_id' => 'required']);
+
+        if (Auth::check()) {
+            CartItem::where('id', $request->product_id)
+                ->where('user_id', Auth::id())
+                ->delete();
+
+            $cartItems = CartItem::with('product')
+                ->where('user_id', Auth::id())
+                ->get();
+
+            $cartCount = $cartItems->sum('quantity');
+        } else {
+            $cart = session()->get('cart', []);
+            unset($cart[$request->product_id]);
+            session()->put('cart', $cart);
+
+            $cartItems = $cart;
+            $cartCount = array_sum(array_column($cart, 'quantity'));
+        }
+
+        return response()->json([
+            'status' => true,
+            'cart_count' => $cartCount,
+            'html' => view('client.components.includes.mini_cart', compact('cartItems'))->render(),
+        ]);
+    }
 }
