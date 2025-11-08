@@ -34,8 +34,10 @@
                                         <td class="cart-product-price">{{ number_format($item['price'], 0, ',', '.') }} VNĐ</td>
                                         <td class="cart-product-quantity">
                                             <div class="cart-plus-minus">
-                                                <input type="text" value="{{ $item['quantity'] }}" name="qtybutton"
-                                                       class="cart-plus-minus-box" readonly data-max="{{ $item['stock'] }}">
+                                                <button class="qtybutton dec">-</button>
+                                                <input type="text" value="{{ $item['quantity'] }}"
+                                                       class="cart-plus-minus-box" readonly data-max="{{ $item['stock'] }}" data-id="{{ $item['product_id'] }}">
+                                                <button class="qtybutton inc">+</button>
                                             </div>
                                         </td>
                                         <td class="cart-product-subtotal">{{ number_format($subtotal, 0, ',', '.') }} VNĐ</td>
@@ -55,7 +57,7 @@
                             <tbody>
                                 <tr>
                                     <td>Tổng tiền</td>
-                                    <td>{{ number_format($cartTotal, 0, ',', '.') }} VNĐ</td>
+                                    <td><span class="cart-total">{{ number_format($cartTotal, 0, ',', '.') }} VNĐ</span></td>
                                 </tr>
                                 <tr>
                                     <td>Phí vận chuyển</td>
@@ -63,11 +65,11 @@
                                 </tr>
                                 <tr>
                                     <td><strong>Tổng thanh toán</strong></td>
-                                    <td><strong>{{ number_format($cartTotal, 0, ',', '.') }} VNĐ</strong></td>
+                                    <td><strong><span class="cart-grand-total">{{ number_format($cartTotal, 0, ',', '.') }} VNĐ</span></strong></td>
                                 </tr>
                             </tbody>
                         </table>
-                        <div class="btn-wrapper text-right text-end">
+                        <div class="btn-wrapper text-end">
                             <a href="javascript:void(0)" class="theme-btn-1 btn btn-effect-1">Thanh toán</a>
                         </div>
                     </div>

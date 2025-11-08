@@ -56,6 +56,7 @@ Route::get('/products/{slug}', [ProductController::class, 'detail'])->name('prod
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
+Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
 Route::post('/cart/remove', [CartController::class, 'removeMiniCart'])->name('cart.remove');
 Route::get('/mini-cart', [CartController::class, 'loadMiniCart'])->name('mini-cart');
 

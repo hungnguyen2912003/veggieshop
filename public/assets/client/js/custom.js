@@ -213,22 +213,46 @@ $(document).ready(function () {
     });
     $( ".amount" ).val($( ".slider-range" ).slider( "values", 0 ) + $( ".slider-range" ).slider( "values", 1 ) + " VNĐ");
 
-    $(document).on('click', '.qtybutton', function() {
-        var button = $(this);
-        var input = button.siblings('input');
-        var oldValue = parseInt(input.val());
-        var maxStock = parseInt(input.data('max'));
+    if(window.location.pathname !== '/cart') {
+        $(document).on('click', '.qtybutton', function() {
+            let button = $(this);
+            let input = button.siblings('input');
+            let oldValue = parseInt(input.val());
+            let maxStock = parseInt(input.data('max'));
+    
+            if(button.hasClass('inc')){
+                if(oldValue < maxStock) {
+                    input.val(oldValue + 1);
+                }
+            } else {
+                if (oldValue > 1) {
+                    input.val(oldValue - 1);
+                }
+            }
+        })
+    } else {
+        $(document).on('click', '.qtybutton', function() {            
+            let button = $(this);
+            let input = button.siblings('input');
+            let oldValue = parseInt(input.val());
+            let maxStock = parseInt(input.data('max'));
+            let productId = input.data('id');
+            let newValue = oldValue;
 
-        if(button.hasClass('inc')){
-            if(oldValue < maxStock) {
-                input.val(oldValue + 1);
+            // Save old value for error recovery
+            input.data('old-value', oldValue);
+    
+            if(button.hasClass('inc') && oldValue < maxStock){
+                newValue = oldValue + 1;
+            } else if (button.hasClass('dec') && oldValue > 1){
+                newValue = oldValue - 1;
             }
-        } else {
-            if (oldValue > 1) {
-                input.val(oldValue - 1);
+
+            if (newValue != oldValue) {
+                updateCart(productId, newValue, input);
             }
-        }
-    })
+        })
+    }
 
     //Add to cart
     $(document).on('click', '.add-to-cart-btn', function(e){
@@ -324,5 +348,39 @@ $(document).ready(function () {
                 toastr.error('Đã xảy ra lỗi khi tải giỏ hàng');
             }
         })        
-    })    
+    })
+    
+    function updateCart(productId, quantity, input) {
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            }
+        });
+
+        $.ajax({
+            url: '/cart/update',
+            type: 'POST',
+            data: {
+                product_id: productId,
+                quantity: quantity
+            },
+            success: function(response) {
+                input.val(response.quantity);
+                input.closest('tr').find('.cart-product-subtotal').text(response.subtotal + ' VNĐ');
+                $('.cart-total').text(response.total + ' VNĐ');
+                $('.cart-grand-total').text(response.grandTotal + ' VNĐ');
+                // Clear old value after successful update
+                input.removeData('old-value');
+            },
+            error: function (xhr) {
+                if (xhr.responseJSON && xhr.responseJSON.message) {
+                    toastr.error(xhr.responseJSON.message);
+                } else {
+                    toastr.error('Đã xảy ra lỗi, vui lòng thử lại!');
+                }
+                // Reset input value on error
+                input.val(input.data('old-value') || input.val());
+            }
+        })         
+    }
 })
