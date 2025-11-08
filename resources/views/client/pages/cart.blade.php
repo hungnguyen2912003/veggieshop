@@ -13,94 +13,65 @@
                     <div class="shoping-cart-table table-responsive">
                         <table class="table">
                             <tbody>
-                                <tr>
-                                    <td class="cart-product-remove">x</td>
-                                    <td class="cart-product-image">
-                                        <a href="product-details.html"><img src="{{ asset('assets/client/img/product/1.png') }}" alt="#"></a>
-                                    </td>
-                                    <td class="cart-product-info">
-                                        <h4><a href="product-details.html">Vegetables Juices</a></h4>
-                                    </td>
-                                    <td class="cart-product-price">$149.00</td>
-                                    <td class="cart-product-quantity">
-                                        <div class="cart-plus-minus">
-                                            <input type="text" value="02" name="qtybutton" class="cart-plus-minus-box">
-                                        </div>
-                                    </td>
-                                    <td class="cart-product-subtotal">$298.00</td>
-                                </tr>
-                                <tr>
-                                    <td class="cart-product-remove">x</td>
-                                    <td class="cart-product-image">
-                                        <a href="product-details.html"><img src="{{ asset('assets/client/img/product/2.png') }}" alt="#"></a>
-                                    </td>
-                                    <td class="cart-product-info">
-                                        <h4><a href="product-details.html">Orange Sliced Mix</a></h4>
-                                    </td>
-                                    <td class="cart-product-price">$85.00</td>
-                                    <td class="cart-product-quantity">
-                                        <div class="cart-plus-minus">
-                                            <input type="text" value="02" name="qtybutton" class="cart-plus-minus-box">
-                                        </div>
-                                    </td>
-                                    <td class="cart-product-subtotal">$170.00</td>
-                                </tr>
-                                <tr>
-                                    <td class="cart-product-remove">x</td>
-                                    <td class="cart-product-image">
-                                        <a href="product-details.html"><img src="{{ asset('assets/client/img/product/3.png') }}" alt="#"></a>
-                                    </td>
-                                    <td class="cart-product-info">
-                                        <h4><a href="product-details.html">Red Hot Tomato</a></h4>
-                                    </td>
-                                    <td class="cart-product-price">$75.00</td>
-                                    <td class="cart-product-quantity">
-                                        <div class="cart-plus-minus">
-                                            <input type="text" value="02" name="qtybutton" class="cart-plus-minus-box">
-                                        </div>
-                                    </td>
-                                    <td class="cart-product-subtotal">$150.00</td>
-                                </tr>
-                                <tr class="cart-coupon-row">
-                                    <td colspan="6">
-                                        <div class="cart-coupon">
-                                            <input type="text" name="cart-coupon" placeholder="Coupon code">
-                                            <button type="submit" class="btn theme-btn-2 btn-effect-2">Apply Coupon</button>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <button type="submit" class="btn theme-btn-2 btn-effect-2-- disabled">Update Cart</button>
-                                    </td>
-                                </tr>
+                                @php
+                                    $cartTotal = 0;
+                                @endphp
+                                @forelse ($cartItems as $item)
+                                    @php
+                                        $subtotal = $item['price'] * $item['quantity'];
+                                        $cartTotal += $subtotal;
+                                    @endphp
+                                    <tr>
+                                        <td class="cart-product-remove">x</td>
+                                        <td class="cart-product-image">
+                                            <a href="javascript:void(0)">
+                                                <img src="{{ asset($item['image'] ?? 'storage/uploads/products/default-product.png') }}" alt="{{ $item['name'] }}">
+                                            </a>
+                                        </td>
+                                        <td class="cart-product-info">
+                                            <h4><a href="javascript:void(0)">{{ $item['name'] }}</a></h4>
+                                        </td>
+                                        <td class="cart-product-price">{{ number_format($item['price'], 0, ',', '.') }} VNĐ</td>
+                                        <td class="cart-product-quantity">
+                                            <div class="cart-plus-minus">
+                                                <input type="text" value="{{ $item['quantity'] }}" name="qtybutton"
+                                                       class="cart-plus-minus-box" readonly data-max="{{ $item['stock'] }}">
+                                            </div>
+                                        </td>
+                                        <td class="cart-product-subtotal">{{ number_format($subtotal, 0, ',', '.') }} VNĐ</td>
+                                    </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="6" class="text-center">Giỏ hàng trống</td>
+                                    </tr>
+                                @endforelse
                             </tbody>
                         </table>
                     </div>
+                    @if (!empty($cartItems) && count($cartItems) > 0)
                     <div class="shoping-cart-total mt-50">
-                        <h4>Cart Totals</h4>
+                        <h4>Tổng giỏ hàng</h4>
                         <table class="table">
                             <tbody>
                                 <tr>
-                                    <td>Cart Subtotal</td>
-                                    <td>$618.00</td>
+                                    <td>Tổng tiền</td>
+                                    <td>{{ number_format($cartTotal, 0, ',', '.') }} VNĐ</td>
                                 </tr>
                                 <tr>
-                                    <td>Shipping and Handing</td>
-                                    <td>$15.00</td>
+                                    <td>Phí vận chuyển</td>
+                                    <td>{{ number_format(0, 0, ',', '.') }} VNĐ</td>
                                 </tr>
                                 <tr>
-                                    <td>Vat</td>
-                                    <td>$00.00</td>
-                                </tr>
-                                <tr>
-                                    <td><strong>Order Total</strong></td>
-                                    <td><strong>$633.00</strong></td>
+                                    <td><strong>Tổng thanh toán</strong></td>
+                                    <td><strong>{{ number_format($cartTotal, 0, ',', '.') }} VNĐ</strong></td>
                                 </tr>
                             </tbody>
                         </table>
                         <div class="btn-wrapper text-right text-end">
-                            <a href="/checkout" class="theme-btn-1 btn btn-effect-1">Proceed to checkout</a>
+                            <a href="javascript:void(0)" class="theme-btn-1 btn btn-effect-1">Thanh toán</a>
                         </div>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>

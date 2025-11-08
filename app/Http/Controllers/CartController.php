@@ -9,6 +9,26 @@ use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
+    public function index()
+    {
+        if (Auth::check()) {
+            $cartItems = CartItem::with('product')->where('user_id', Auth::id())->with('product')->get()->map(function ($item) {
+                return [
+                    'product_id' => $item->product_id,
+                    'quantity' => $item->quantity,
+                    'name' => $item->product->name,
+                    'price' => $item->product->price,
+                    'stock' => $item->product->stock,
+                    'image' => $item->product->images->first()->image ?? asset('storage/uploads/products/default-product.png'),
+                ];
+            });
+        } else {
+            $cartItems = session('cart', []);
+        }
+
+        return view('client.pages.cart', compact('cartItems'));
+    }
+
     public function addToCart(Request $request)
     {
         $request->merge(['quantity' => (int) $request->quantity]);
