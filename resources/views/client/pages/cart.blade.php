@@ -46,7 +46,7 @@
                                     </tr>
                                 @empty
                                     <tr>
-                                        <td colspan="6" class="text-center">Giỏ hàng trống</td>
+                                        <td colspan="6" class="text-center">Giỏ hàng đang trống</td>
                                     </tr>
                                 @endforelse
                             </tbody>
@@ -72,7 +72,7 @@
                             </tbody>
                         </table>
                         <div class="btn-wrapper text-end">
-                            <a href="javascript:void(0)" class="theme-btn-1 btn btn-effect-1">Thanh toán</a>
+                            <a href="javascript:void(0)" class="theme-btn-1 btn btn-effect-1">Tiến hành thanh toán</a>
                         </div>
                     </div>
                     @endif

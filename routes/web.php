@@ -8,6 +8,7 @@ use App\Http\Controllers\Client\AccountController;
 use App\Http\Controllers\Client\HomeController;
 use App\Http\Controllers\Client\ProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -48,6 +49,8 @@ Route::middleware('auth')->group(function () {
         Route::put('/addresses/{id}', [AccountController::class, 'updatePrimaryAddress'])->name('addresses.update');
         Route::delete('/addresses/{id}', [AccountController::class, 'deleteAddress'])->name('addresses.delete');
     });
+
+    Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
 });
 
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');

@@ -75,33 +75,36 @@
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            @foreach ($addresses as $address)
-                                                            <tr>
-                                                                <td>{{ $address->full_name }}</td>
-                                                                <td>{{ $address->address }}</td>
-                                                                <td>{{ $address->city }}</td>
-                                                                <td>{{ $address->phone }}</td>
-                                                                <td>
-                                                                    @if ($address->default)
-                                                                        <span class="badge bg-success">Mặc định</span>
-                                                                    @else
-                                                                        <form action="{{ route('account.addresses.update', $address->id) }}" method="POST" class="d-inline">
+                                                            @forelse ($addresses as $address)
+                                                                <tr>
+                                                                    <td>{{ $address->full_name }}</td>
+                                                                    <td>{{ $address->address }}</td>
+                                                                    <td>{{ $address->city }}</td>
+                                                                    <td>{{ $address->phone }}</td>
+                                                                    <td>
+                                                                        @if ($address->default)
+                                                                            <span class="badge bg-success">Mặc định</span>
+                                                                        @else
+                                                                            <form action="{{ route('account.addresses.update', $address->id) }}" method="POST" class="d-inline">
+                                                                                @csrf
+                                                                                @method('PUT')
+                                                                                <button type="submit" class="btn btn-sm btn-warning">Chọn</button>
+                                                                            </form>
+                                                                        @endif
+                                                                    </td>
+                                                                    <td>
+                                                                        <form action="{{ route('account.addresses.delete', $address->id) }}" method="POST" class="d-inline">
                                                                             @csrf
-                                                                            @method('PUT')
-                                                                            <button type="submit" class="btn btn-sm btn-warning">Chọn</button>
+                                                                            @method('DELETE')
+                                                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa địa chỉ này?')">Xóa</button>
                                                                         </form>
-                                                                    @endif
-                                                                </td>
-                                                                <td>
-                                                                    <form action="{{ route('account.addresses.delete', $address->id) }}" method="POST" class="d-inline">
-                                                                        @csrf
-                                                                        @method('DELETE')
-                                                                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Bạn có chắc chắn muốn xóa địa chỉ này?')">Xóa</button>
-                                                                    </form>                                                                    
-                                                                    
-                                                                </td>
-                                                            </tr>
-                                                            @endforeach
+                                                                    </td>
+                                                                </tr>
+                                                            @empty
+                                                                <tr>
+                                                                    <td colspan="6" class="text-center text-muted">Chưa có địa chỉ nào được thêm</td>
+                                                                </tr>
+                                                            @endforelse
                                                         </tbody>
                                                     </table>
                                                 </div>
