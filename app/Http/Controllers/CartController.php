@@ -188,11 +188,32 @@ class CartController extends Controller
 
         $subtotal = $quantity * $product->price;
         $total = $this->calculateCartTotal();
-        $grandTotal = $total + 25000;
+        $grandTotal = $total;
 
         return response()->json([
             'quantity' => $quantity,
             'subtotal' => number_format($subtotal, 0, ',', '.'),
+            'total' => number_format($total, 0, ',', '.'),
+            'grandTotal' => number_format($grandTotal, 0, ',', '.'),
+        ]);
+    }
+
+    public function removeCartItem(Request $request)
+    {
+        $productId = $request->product_id;
+
+        if (Auth::check()) {
+            CartItem::where('user_id', Auth::id())->where('product_id', $productId)->delete();
+        } else {
+            $cart = session()->get('cart', []);
+            unset($cart[$productId]);
+            session()->put('cart', $cart);
+        }
+
+        $total = $this->calculateCartTotal();
+        $grandTotal = $total;
+
+        return response()->json([
             'total' => number_format($total, 0, ',', '.'),
             'grandTotal' => number_format($grandTotal, 0, ',', '.'),
         ]);

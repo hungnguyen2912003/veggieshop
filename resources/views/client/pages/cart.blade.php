@@ -1,8 +1,8 @@
 @extends('layouts.client.client')
 
-@section('title', 'Cart')
+@section('title', 'Giỏ hàng')
 
-@section('breadcrumb', 'Cart')
+@section('breadcrumb', 'Giỏ hàng')
 
 @section('content')
 <div class="liton__shoping-cart-area mb-120">
@@ -22,7 +22,9 @@
                                         $cartTotal += $subtotal;
                                     @endphp
                                     <tr>
-                                        <td class="cart-product-remove">x</td>
+                                        <td class="cart-product-remove">
+                                            <button class="remove-from-cart" data-id="{{ $item['product_id'] }}">x</button>
+                                        </td>
                                         <td class="cart-product-image">
                                             <a href="javascript:void(0)">
                                                 <img src="{{ asset($item['image'] ?? 'storage/uploads/products/default-product.png') }}" alt="{{ $item['name'] }}">

@@ -54,11 +54,15 @@ Route::get('/products', [ProductController::class, 'index'])->name('products.ind
 Route::get('/products/filter', [ProductController::class, 'filter'])->name('products.filter');
 Route::get('/products/{slug}', [ProductController::class, 'detail'])->name('products.detail');
 
-Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+// cart routes
 Route::post('/cart/add', [CartController::class, 'addToCart'])->name('cart.add');
-Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
 Route::post('/cart/remove', [CartController::class, 'removeMiniCart'])->name('cart.remove');
 Route::get('/mini-cart', [CartController::class, 'loadMiniCart'])->name('mini-cart');
+// cart page routes
+Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+Route::post('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
+Route::post('/cart/remove-cart-item', [CartController::class, 'removeCartItem'])->name('cart.remove-cart-item');
+
 
 Route::get('/about', function () {
     return view('client.page.about');

@@ -383,4 +383,36 @@ $(document).ready(function () {
             }
         })         
     }
+
+    $('.remove-from-cart').on('click', function(e) {
+
+        let productId = $(this).data('id');
+        let row = $(this).closest('tr');
+
+        $.ajaxSetup({
+            headers: {
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+            }
+        });
+        
+        $.ajax({
+            url: '/cart/remove-cart-item',
+            type: 'POST',
+            data: {
+                product_id: productId
+            },
+            success: function(response) {
+                row.remove();
+                $('.cart-total').text(response.total + ' VNĐ');
+                $('.cart-grand-total').text(response.grandTotal + ' VNĐ');
+                
+                if($('.cart-product-remove').length === 0) {
+                    location.reload();
+                }
+            },
+            error: function (xhr) {
+                toastr.error(xhr.responseJSON.error);
+            }
+        })
+    });
 })
