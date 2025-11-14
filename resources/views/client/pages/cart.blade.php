@@ -72,7 +72,7 @@
                             </tbody>
                         </table>
                         <div class="btn-wrapper text-end">
-                            <a href="javascript:void(0)" class="theme-btn-1 btn btn-effect-1">Tiến hành thanh toán</a>
+                            <a href="{{ route('checkout') }}" class="theme-btn-1 btn btn-effect-1">Tiến hành thanh toán</a>
                         </div>
                     </div>
                     @endif

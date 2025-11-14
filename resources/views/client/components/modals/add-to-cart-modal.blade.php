@@ -19,7 +19,7 @@
                                         <h5><a href="{{ route('products.detail', $product->slug) }}">{{ $product->name }}</a></h5>
                                         <p class="added-cart"><i class="fa fa-check-circle"></i> Thêm vào giỏ hàng thành công</p>
                                         <div class="btn-wrapper">
-                                            <a href="{{ route('cart.index') }}" class="theme-btn-1 btn btn-effect-1">Xem giỏ hàng</a>
+                                            <a href="{{ route('cart') }}" class="theme-btn-1 btn btn-effect-1">Xem giỏ hàng</a>
                                         </div>
                                     </div>
                                     <!-- additional-info -->

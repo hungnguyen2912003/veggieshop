@@ -67,30 +67,35 @@
             <div class="col-lg-6">
                 <div class="ltn__checkout-payment-method mt-50">
                     <h4 class="title-2">Phương thức thanh toán</h4>
-                    <div id="checkout_payment">
-                        <!-- card -->
-                        <div class="card">
-                            <h5 class="ltn__card-title">
-                                <input type="radio" name="payment_method" value="cash" id="payment_cod" checked>
-                                <label for="payment_cod">
-                                    Thanh toán khi nhận hàng <img src="{{ asset('assets/client/img/icons/cash.png') }}" alt="#">
-                                </label>
-                            </h5>
+                    <form action="{{ route('checkout.placeOrder') }}" method="POST">
+                        @csrf
+
+                        <input type="hidden" name="address_id" value="{{ $defaultAddress->id }}">
+                        <div id="checkout_payment">
+                            <!-- card -->
+                            <div class="card">
+                                <h5 class="ltn__card-title">
+                                    <input type="radio" name="payment_method" value="cash" id="payment_cod" checked>
+                                    <label for="payment_cod">
+                                        Thanh toán khi nhận hàng <img src="{{ asset('assets/client/img/icons/cash.png') }}" alt="#">
+                                    </label>
+                                </h5>
+                            </div>
+                            <!-- card -->
+                            <div class="card">
+                                <h5 class="collapsed ltn__card-title">
+                                    <input type="radio" name="payment_method" value="paypal" id="payment_paypal">
+                                    <label for="payment_paypal">
+                                        PayPal <img src="{{ asset('assets/client/img/icons/payment-3.png') }}" alt="#">
+                                    </label>
+                                </h5>
+                            </div>
                         </div>
-                        <!-- card -->
-                        <div class="card">
-                            <h5 class="collapsed ltn__card-title">
-                                <input type="radio" name="payment_method" value="paypal" id="payment_paypal" checked>
-                                <label for="payment_paypal">
-                                    PayPal <img src="{{ asset('assets/client/img/icons/payment-3.png') }}" alt="#">
-                                </label>
-                            </h5>
+                        <div class="ltn__payment-note mt-30 mb-30">
+                            <p>Dữ liệu cá nhân của bạn sẽ được sử dụng để xử lý đơn hàng của bạn, hỗ trợ trải nghiệm của bạn trên toàn bộ trang web này và cho các mục đích khác được mô tả trong chính sách bảo mật của chúng tôi.</p>
                         </div>
-                    </div>
-                    <div class="ltn__payment-note mt-30 mb-30">
-                        <p>Dữ liệu cá nhân của bạn sẽ được sử dụng để xử lý đơn hàng của bạn, hỗ trợ trải nghiệm của bạn trên toàn bộ trang web này và cho các mục đích khác được mô tả trong chính sách bảo mật của chúng tôi.</p>
-                    </div>
-                    <button class="btn theme-btn-1 btn-effect-1 text-uppercase" type="submit">Đặt hàng</button>
+                        <button class="btn theme-btn-1 btn-effect-1 text-uppercase" type="submit" id="order_button_cash">Đặt hàng</button>
+                    </form>
                 </div>
             </div>
             <div class="col-lg-6">

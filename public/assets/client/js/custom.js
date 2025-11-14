@@ -436,6 +436,7 @@ $(document).ready(function () {
                     $('input[name="ltn__phone"]').val(response.data.phone);
                     $('input[name="ltn__address"]').val(response.data.address);
                     $('input[name="ltn__city"]').val(response.data.city);
+                    $('input[name="address_id"]').val(response.data.id);
                 }
             },
 
