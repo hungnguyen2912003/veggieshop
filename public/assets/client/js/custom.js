@@ -415,4 +415,34 @@ $(document).ready(function () {
             }
         })
     });
+
+
+    /*******************************
+     * PAGE CHECKOUT 
+     *******************************/
+    $('#list_address').change(function () {
+        var addressId = $(this).val();
+
+        $.ajax({
+            url: '/checkout/get-address',
+            type: 'GET',
+            data: {
+                address_id: addressId,
+            },
+
+            success: function(response) {
+                if (response.success) {
+                    $('input[name="ltn__name"]').val(response.data.full_name);
+                    $('input[name="ltn__phone"]').val(response.data.phone);
+                    $('input[name="ltn__address"]').val(response.data.address);
+                    $('input[name="ltn__city"]').val(response.data.city);
+                }
+            },
+
+            error: function(xhr) {
+                alert(xhr.responseJSON.error);
+            }
+        });
+    });
+
 })

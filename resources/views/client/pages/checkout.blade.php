@@ -20,9 +20,9 @@
                             <div>
                                 <select name="address_id" id="list_address" class="input-item">
                                     @foreach ($addresses as $address)
-                                        <option value="{{ $address->id }}" {{ $address->default ? 'selected' : '' }}>
-                                            {{ $address->full_name }} - {{ $address->address }}
-                                        </option>
+                                    <option value="{{ $address->id }}" {{ $address->default ? 'selected' : '' }}>
+                                        {{ $address->full_name }} - {{ $address->address }}
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -31,7 +31,7 @@
                             </div>
                         </div>
                         <div class="ltn__checkout-single-content-info">
-                            <form action="#" >
+                            <form action="#">
                                 <h6>Thông tin cá nhân</h6>
                                 <div class="row">
                                     <div class="col-md-6">
@@ -49,13 +49,13 @@
                                     <div class="col-md-6">
                                         <h6>Địa chỉ</h6>
                                         <div class="input-item">
-                                            <input type="text" placeholder="Nhập số nhà và tên đường" value="{{ $defaultAddress->address }}" readonly>
+                                            <input type="text" name="ltn__address" placeholder="Nhập số nhà và tên đường" value="{{ $defaultAddress->address }}" readonly>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <h6>Thành phố</h6>
                                         <div class="input-item">
-                                            <input type="text" placeholder="Nhập thành phố" value="{{ $defaultAddress->city }}" readonly>
+                                            <input type="text" name="ltn__city" placeholder="Nhập thành phố" value="{{ $defaultAddress->city }}" readonly>
                                         </div>
                                     </div>
                                 </div>
@@ -73,7 +73,7 @@
                             <h5 class="ltn__card-title">
                                 <input type="radio" name="payment_method" value="cash" id="payment_cod" checked>
                                 <label for="payment_cod">
-                                    Thanh toán khi nhận hàng  <img src="{{ asset('assets/client/img/icons/cash.png') }}" alt="#">
+                                    Thanh toán khi nhận hàng <img src="{{ asset('assets/client/img/icons/cash.png') }}" alt="#">
                                 </label>
                             </h5>
                         </div>
@@ -90,7 +90,7 @@
                     <div class="ltn__payment-note mt-30 mb-30">
                         <p>Dữ liệu cá nhân của bạn sẽ được sử dụng để xử lý đơn hàng của bạn, hỗ trợ trải nghiệm của bạn trên toàn bộ trang web này và cho các mục đích khác được mô tả trong chính sách bảo mật của chúng tôi.</p>
                     </div>
-                    <button class="btn theme-btn-1 btn-effect-1 text-uppercase" type="submit">Đặt hàng</button>                        
+                    <button class="btn theme-btn-1 btn-effect-1 text-uppercase" type="submit">Đặt hàng</button>
                 </div>
             </div>
             <div class="col-lg-6">
@@ -98,29 +98,22 @@
                     <h4 class="title-2">Tổng sản phẩm</h4>
                     <table class="table">
                         <tbody>
+                            @foreach ($cartItems as $item)
                             <tr>
-                                <td>Vegetables Juices <strong>× 2</strong></td>
-                                <td>$298.00</td>
+                                <td>{{ $item->product->name }} <strong>x {{ $item->quantity }}</strong></td>
+                                <td>{{ number_format(num: $item->product->price * $item->quantity, decimals: 0, decimal_separator: ',', thousands_separator: '.') }} đ</td>
+                                <td></td>
                             </tr>
+                            @endforeach
+
                             <tr>
-                                <td>Orange Sliced Mix <strong>× 2</strong></td>
-                                <td>$170.00</td>
+                                <td>Vận chuyển và xử lý</td>
+                                <td>{{ number_format(num: 25000, decimals: 0, decimal_separator: ',', thousands_separator: '.') }} đ</td>
                             </tr>
+
                             <tr>
-                                <td>Red Hot Tomato <strong>× 2</strong></td>
-                                <td>$150.00</td>
-                            </tr>
-                            <tr>
-                                <td>Shipping and Handing</td>
-                                <td>$15.00</td>
-                            </tr>
-                            <tr>
-                                <td>Vat</td>
-                                <td>$00.00</td>
-                            </tr>
-                            <tr>
-                                <td><strong>Order Total</strong></td>
-                                <td><strong>$633.00</strong></td>
+                                <td><strong>Tổng tiền</strong></td>
+                                <td><strong class="totalPrice_checkout">{{ number_format(num: $totalPrice + 25000, decimals: 0, decimal_separator: ',', thousands_separator: '.') }} đ</strong></td>
                             </tr>
                         </tbody>
                     </table>
