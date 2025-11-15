@@ -22,6 +22,8 @@
     <link rel="stylesheet" href="{{ asset('assets/client/css/responsive.css') }}">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('assets/client/css/custom.css') }}">
+    <!-- Toastr -->
+    <link rel="stylesheet" href="{{ asset('assets/client/css/toastr.min.css') }}">
 </head>
 
 <body>
@@ -53,5 +55,9 @@
     <script src="{{ asset('assets/client/js/main.js') }}"></script>
     <!-- Custom JS -->
     <script src="{{ asset('assets/client/js/custom.js') }}"></script>
+    <!-- Paypal -->
+    <script src="https://www.paypal.com/sdk/js?client-id={{ env('PAYPAL_CLIENT_ID') }}&currency=USD"></script>
+    <!-- Toastr -->
+    <script src="{{ asset('assets/client/js/toastr.min.js') }}"></script>
 </body>
 </html>

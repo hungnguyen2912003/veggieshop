@@ -6,8 +6,8 @@
     @php
         $subtotal = 0;   
     @endphp
-    @if (!empty($cartItems) && count($cartItems) > 0)
-        @foreach ($cartItems as $item)
+    @if (!empty($miniCartItems) && count($miniCartItems) > 0)
+        @foreach ($miniCartItems as $item)
         @php
             $product = auth()->check() ? $item->product : \App\Models\Product::find($item['product_id']);
             $quantity = auth()->check() ? $item->quantity : $item['quantity'];

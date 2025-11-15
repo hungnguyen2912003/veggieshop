@@ -12,17 +12,17 @@ class CartController extends Controller
     public function index()
     {
         if (Auth::check()) {
-            $cartItems = CartItem::with('product')->where('user_id', Auth::id())->with('product')->get()->map(function ($item) {
+            $cartItems = CartItem::where('user_id', Auth::id())->with('product')->get()->map(function ($item) {
                 return [
                     'product_id' => $item->product_id,
-                    'quantity' => $item->quantity,
                     'name' => $item->product->name,
+                    'quantity' => $item->quantity,
                     'price' => $item->product->price,
                     'stock' => $item->product->stock,
                     'image' => $item->product->images->first()->image ?? asset('storage/uploads/products/default-product.png'),
                     'slug' => $item->product->slug,
                 ];
-            });
+            })->toArray();
         } else {
             $cartItems = session('cart', []);
         }
@@ -87,17 +87,17 @@ class CartController extends Controller
 
     public function loadMiniCart()
     {
-        $cartItems = [];
+        $miniCartItems = [];
 
         if (auth()->check()) {
-            $cartItems = CartItem::with('product')->where('user_id', auth()->id())->get();
+            $miniCartItems = CartItem::with('product')->where('user_id', auth()->id())->get();
         } else {
-            $cartItems = session('cart', []);
+            $miniCartItems = session('cart', []);
         }
 
         return response()->json([
             'status' => true,
-            'html' => view('client.components.includes.mini_cart', compact('cartItems'))->render(),
+            'html' => view('client.components.includes.mini_cart', compact('miniCartItems'))->render(),
         ]);
     }
 

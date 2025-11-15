@@ -38,7 +38,7 @@ $(document).ready(function () {
 
             success: function(response) {
                 if (response.success) {
-                    toastr.success(response.message);
+                    flasher.success(response.message);
                     if (response.avatar) {
                         $('#preview-image').attr('src', response.avatar);
                     } else {
@@ -50,7 +50,7 @@ $(document).ready(function () {
             error: function (xhr, status, error) {
                 let errors = xhr.responseJSON.errors;
                 $.each(errors, function (key, value) {   
-                    toastr.error(value[0]);    
+                    flasher.error(value[0]);    
                 });
             },
             complete: function () {
@@ -446,4 +446,66 @@ $(document).ready(function () {
         });
     });
 
+    // Handle Payment
+
+    function togglePayment() {
+        if ($('#payment_paypal').is(':checked')) {
+            $('#order_button_cash').hide();
+            $('#paypal-button-container').show();
+        } else {
+            $('#order_button_cash').show();
+            $('#paypal-button-container').hide();
+        }
+    }
+
+    togglePayment();
+
+    $('input[name="payment_method"]').on('change', togglePayment);
+
+
+        var totalPriceText = $('.totalPrice_checkout').text().trim();
+        var totalPriceNumber = parseFloat(totalPriceText.replace(/\./g, "").replace(" đ", ""));
+
+    paypal.Buttons({
+        createOrder: function (data, actions) {
+            return actions.order.create({
+                purchase_units: [
+                    {
+                        amount: {
+                            value: (totalPriceNumber / 25000).toFixed(2),
+                        },
+                    },
+                ],
+            });
+        },
+        onApprove: function (data, actions) {
+            return actions.order.capture().then(function (details) {
+
+                //Send information the checkout to server
+                fetch('/checkout/paypal', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+                    },
+                    body: JSON.stringify({
+                        orderID: data.orderID,
+                        payerID: data.payerID,
+                        transactionID: details.id,
+                        amount: details.purchase_units[0].amount.value,
+                        address_id: $('#list_address').val()
+                    })
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.success) {
+                        flasher.success(data.message);
+                        window.location.href = "/account";
+                    } else {
+                        alert('Có lỗi xảy ra, vui lòng thử lại!');
+                    }
+                });
+            });
+        }
+    }).render('#paypal-button-container');
 })

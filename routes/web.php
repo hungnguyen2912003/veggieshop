@@ -53,6 +53,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout');
     Route::get('/checkout/get-address', [CheckoutController::class, 'getAddress'])->name('checkout.address');
     Route::post('/checkout', [CheckoutController::class, 'placeOrder'])->name('checkout.placeOrder');
+    Route::post('/checkout/paypal', [CheckoutController::class, 'placeOrderPaypal'])->name('checkout.placeOrderPaypal');
 });
 
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
